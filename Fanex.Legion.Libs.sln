@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.852
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "N88", "N88", "{3D8BD056-8E46-4B19-B5BE-F3CC15019B2D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{E25C951F-4816-4602-B782-4B4A956056BE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LAP", "LAP", "{0B9DDF59-B389-428C-A029-B80FBC32283E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Authentication", "Authentication", "{F6E2216B-D760-48F3-9570-6CFA789A9ECA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{4997AA04-1E77-4DAF-80B7-54E3C0D38715}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{EF5BE14D-AA4C-4B3C-B6E6-0108D2B06626}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fanex.N88.Authentication.Common", "N88\Authentication\src\Fanex.N88.Authentication.Common\Fanex.N88.Authentication.Common.csproj", "{82AB89DB-A08D-4A4D-A8F2-701BD51BCACF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fanex.N88.Authentication.Extensions", "N88\Authentication\src\Fanex.N88.Authentication.Extensions\Fanex.N88.Authentication.Extensions.csproj", "{A24F3E78-341D-444B-ADD5-394415EDE695}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fanex.Legion.Core", "Core\Fanex.Legion.Core\Fanex.Legion.Core.csproj", "{4F25DCBC-04E5-4116-8324-D80229D3D1CE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{82AB89DB-A08D-4A4D-A8F2-701BD51BCACF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82AB89DB-A08D-4A4D-A8F2-701BD51BCACF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82AB89DB-A08D-4A4D-A8F2-701BD51BCACF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82AB89DB-A08D-4A4D-A8F2-701BD51BCACF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A24F3E78-341D-444B-ADD5-394415EDE695}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A24F3E78-341D-444B-ADD5-394415EDE695}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A24F3E78-341D-444B-ADD5-394415EDE695}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A24F3E78-341D-444B-ADD5-394415EDE695}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F25DCBC-04E5-4116-8324-D80229D3D1CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F25DCBC-04E5-4116-8324-D80229D3D1CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F25DCBC-04E5-4116-8324-D80229D3D1CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F25DCBC-04E5-4116-8324-D80229D3D1CE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F6E2216B-D760-48F3-9570-6CFA789A9ECA} = {3D8BD056-8E46-4B19-B5BE-F3CC15019B2D}
+		{4997AA04-1E77-4DAF-80B7-54E3C0D38715} = {F6E2216B-D760-48F3-9570-6CFA789A9ECA}
+		{EF5BE14D-AA4C-4B3C-B6E6-0108D2B06626} = {F6E2216B-D760-48F3-9570-6CFA789A9ECA}
+		{82AB89DB-A08D-4A4D-A8F2-701BD51BCACF} = {4997AA04-1E77-4DAF-80B7-54E3C0D38715}
+		{A24F3E78-341D-444B-ADD5-394415EDE695} = {4997AA04-1E77-4DAF-80B7-54E3C0D38715}
+		{4F25DCBC-04E5-4116-8324-D80229D3D1CE} = {E25C951F-4816-4602-B782-4B4A956056BE}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BFB21418-8649-4DE3-9DA7-889F18C7DCB7}
+	EndGlobalSection
+EndGlobal
