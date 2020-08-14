@@ -18,8 +18,9 @@ namespace Fanex.N88.Authentication.Common.Services
         public int Database => _options.Database;
         public int KeepAlive => _options.KeepAlive;
 
-        public AsyncLazy<ConnectionMultiplexer> Multiplexer { get; private set; }
-        public AsyncLazy<IDatabase> DBConnection { get; private set; }
+        public AsyncLazy<IDatabase> DBConnectionAsync { get; private set; }
+
+        public Lazy<IDatabase> DBConnection { get; private set; }
 
         public AuthRedisClient(AuthRedisOption options, ISerializer serializer)
         {
@@ -30,28 +31,51 @@ namespace Fanex.N88.Authentication.Common.Services
 
         private void InitLazy()
         {
-            Multiplexer = new AsyncLazy<ConnectionMultiplexer>(() => ConnectionMultiplexer.ConnectAsync(new ConfigurationOptions
+            DBConnectionAsync = new AsyncLazy<IDatabase>(async () =>
             {
-                KeepAlive = KeepAlive,
-                EndPoints =
+                var connection = await ConnectionMultiplexer.ConnectAsync(new ConfigurationOptions
+                {
+                    KeepAlive = KeepAlive,
+                    EndPoints =
                     {
                         { Host, Port }
                     },
-                Password = Password,
-                DefaultDatabase = Database,
-            }));
+                    Password = Password,
+                    DefaultDatabase = Database,
+                });
 
-            DBConnection = new AsyncLazy<IDatabase>(async () =>
+                return connection.GetDatabase(Database);
+            });
+
+            DBConnection = new Lazy<IDatabase>(() =>
             {
-                var connection = await Multiplexer.Value;
+                var connection = ConnectionMultiplexer.Connect(new ConfigurationOptions
+                {
+                    KeepAlive = KeepAlive,
+                    EndPoints =
+                    {
+                        { Host, Port }
+                    },
+                    Password = Password,
+                    DefaultDatabase = Database,
+                });
+
                 return connection.GetDatabase(Database);
             });
         }
 
+        public T GetFromAssemblies<T>(string key)
+        {
+            var dbConnection = DBConnection.Value;
+            var hashEntries = dbConnection.HashGetAll(key);
+            var model = MapFromHash<T>(hashEntries);
+            return model;
+        }
+
         public async Task<T> GetFromAssembliesAsync<T>(string key)
         {
-            var dbConnection = await DBConnection.Value;
-            var hashEntries = await dbConnection.HashGetAllAsync(key);
+            var dbConnection = await DBConnectionAsync.Value.ConfigureAwait(false);
+            var hashEntries = await dbConnection.HashGetAllAsync(key).ConfigureAwait(false);
             var model = MapFromHash<T>(hashEntries);
             return model;
         }

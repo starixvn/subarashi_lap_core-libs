@@ -3,9 +3,6 @@ using Fanex.N88.Authentication.Extensions.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
-using System.Security.Claims;
-using System.Security.Principal;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 
@@ -21,13 +18,15 @@ namespace Fanex.N88.Authentication.Extensions.Handlers
 
         protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
         {
-            var token = Options.TokenRetrieval?.Invoke(Request);
+            var token = Options.TokenRetrieval.Invoke(Request);
             if (!string.IsNullOrEmpty(token))
             {
                 var authInfo = await Options.AuthStrategy.AuthenticateAsync(token);
                 if (authInfo != null)
                 {
+                    ShareIdentityData(authInfo);
                     var ticket = CreateTicket(authInfo);
+
                     return AuthenticateResult.Success(ticket);
                 }
             }
@@ -37,12 +36,13 @@ namespace Fanex.N88.Authentication.Extensions.Handlers
 
         private AuthenticationTicket CreateTicket(AuthInfo authInfo)
         {
-            var identityClaim = new Claim(ClaimTypes.Name, authInfo.LicenseeAuthInfo.LicenseeId.ToString());
-            var userDataClaim = new Claim(ClaimTypes.UserData, JsonConvert.SerializeObject(authInfo));
-            var claims = new ClaimsIdentity(new[] { identityClaim, userDataClaim }, Scheme.Name);
-            var principal = new GenericPrincipal(claims, new string[] { });
-
+            var principal = Options.PrincipalGenerater.Generate(authInfo, Scheme.Name);
             return new AuthenticationTicket(principal, Scheme.Name);
+        }
+
+        private void ShareIdentityData(AuthInfo authInfo)
+        {
+            Context.Items.Add(AuthenticationSchema.MPASharedAuth, authInfo);
         }
     }
 }

@@ -15,10 +15,17 @@ namespace Fanex.N88.Authentication.Common.Services
             _redisClient = redisClient ?? throw new ArgumentNullException(nameof(redisClient));
         }
 
+        public AuthInfo Authenticate(string token)
+        {
+            var key = BuildKey(token);
+            var result = _redisClient.GetFromAssemblies<AuthInfo>(key);
+            return result;
+        }
+
         public async Task<AuthInfo> AuthenticateAsync(string token)
         {
             var key = BuildKey(token);
-            var result = await _redisClient.GetFromAssembliesAsync<AuthInfo>(key);
+            var result = await _redisClient.GetFromAssembliesAsync<AuthInfo>(key).ConfigureAwait(false);
             return result;
         }
 

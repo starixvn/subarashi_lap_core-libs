@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 
@@ -10,7 +11,7 @@ namespace Fanex.N88.Authentication.Common.Core
     {
         public T Deserialize<T>(byte[] serializedModel)
         {
-            if (serializedModel == null || serializedModel.Length == 0)
+            if (serializedModel == null || !serializedModel.Any())
             {
                 return (T)Activator.CreateInstance(typeof(T));
             }

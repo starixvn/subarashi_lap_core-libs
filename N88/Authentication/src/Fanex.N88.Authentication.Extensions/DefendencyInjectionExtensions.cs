@@ -1,10 +1,9 @@
-﻿using Fanex.N88.Authentication.Common.Core;
+﻿using Fanex.N88.Authentication.Common;
 using Fanex.N88.Authentication.Common.Models;
 using Fanex.N88.Authentication.Common.Services;
 using Fanex.N88.Authentication.Extensions.Handlers;
 using Fanex.N88.Authentication.Extensions.Models;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Options;
@@ -14,36 +13,46 @@ namespace Fanex.N88.Authentication.Extensions
 {
     public static class DefendencyInjectionExtensions
     {
-        public static AuthenticationBuilder AddMPASharedAuth(this AuthenticationBuilder builder, IConfiguration configuration, Action<MPAAuthenticationOptions> configureOptions)
+        public static AuthenticationBuilder AddMPASharedAuth(this AuthenticationBuilder builder, Action<MPAAuthenticationOptions> configureOptions)
         {
-            builder.Services.RegisterDI(configuration);
+            builder.Services.RegisterDI();
 
             builder
-                .AddScheme<MPAAuthenticationOptions, MPAAuthenticationHandler>(AuthenticationSchema.MPASharedAuth, configureOptions)
+                .AddScheme<MPAAuthenticationOptions, MPAAuthenticationHandler>(AuthenticationSchema.MPASharedAuth, options =>
+                {
+                    configureOptions?.Invoke(options);
+                    builder.Services.BuildServiceProvider().SetDefaultStrategyOptions(options);
+                })
                 .Services.TryAddEnumerable(ServiceDescriptor.Singleton<IPostConfigureOptions<MPAAuthenticationOptions>, PostConfigureMPAAuthenticationOptions>());
 
             return builder;
         }
 
-        public static AuthenticationBuilder AddMPASharedAuth(this AuthenticationBuilder builder, IConfiguration configuration)
+        public static AuthenticationBuilder AddMPASharedAuth(this AuthenticationBuilder builder)
         {
-            return builder.AddMPASharedAuth(configuration, options =>
+            return builder.AddMPASharedAuth(options =>
                 {
-                    options.AuthStrategy = builder.Services.BuildServiceProvider().GetRequiredService<IMPAAuthStrategy>();
+                    builder.Services.BuildServiceProvider().SetDefaultStrategyOptions(options);
                 });
         }
 
-        private static IServiceCollection RegisterDI(this IServiceCollection services, IConfiguration configuration)
+        private static void SetDefaultStrategyOptions(this ServiceProvider serviceProvider, MPAAuthenticationOptions options)
         {
-            services.AddSingleton<ISerializer, BinarySerializer>();
+            if (options.AuthStrategy is null)
+            {
+                options.AuthStrategy = serviceProvider.GetRequiredService<IMPAAuthStrategy>();
+            }
 
-            services.AddSingleton<IRedisClient>(serviceProvider => new AuthRedisClient(
-                configuration.GetSection("MPAAuth:Redis").Get<AuthRedisOption>(),
-                serviceProvider.GetRequiredService<ISerializer>()));
+            if (options.PrincipalGenerater is null)
+            {
+                options.PrincipalGenerater = serviceProvider.GetRequiredService<IMPAPrincipalGenerater>();
+            }
+        }
 
-            services.AddSingleton<IMPAAuthStrategy>(serviceProvider => new MPAAuthSharedSessionStrategy(
-                configuration.GetSection("MPAAuth").Get<MPASharedSessionOption>(),
-                serviceProvider.GetRequiredService<IRedisClient>()));
+        private static IServiceCollection RegisterDI(this IServiceCollection services)
+        {
+            services.AddSingleton(_ => MPASharedAuthManager.MPAAuthStrategy);
+            services.AddSingleton(_ => MPASharedAuthManager.MPAPrincipalGenerater);
 
             return services;
         }

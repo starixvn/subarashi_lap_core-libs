@@ -13,6 +13,8 @@ namespace Fanex.N88.Authentication.Extensions.Models
 
         public IMPAAuthStrategy AuthStrategy { get; set; }
 
+        public IMPAPrincipalGenerater PrincipalGenerater { get; set; }
+
         public Func<HttpRequest, string> TokenRetrieval { get; set; } = AccessTokenFromDefault;
 
         public override void Validate()
@@ -22,6 +24,11 @@ namespace Fanex.N88.Authentication.Extensions.Models
             if (AuthStrategy is null)
             {
                 throw new Exception($"{nameof(AuthStrategy)} is required");
+            }
+
+            if (PrincipalGenerater is null)
+            {
+                throw new Exception($"{nameof(PrincipalGenerater)} is required");
             }
 
             if (TokenRetrieval == null)
