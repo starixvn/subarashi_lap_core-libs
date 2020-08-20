@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <Authors>Howard</Authors>
+    <Company>Legion Team</Company>
+    <Product>NVC Utils</Product>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\Core\Src\Common\Fanex.Core.Utils\Fanex.Core.Utils.csproj" />
+  </ItemGroup>
+
+</Project>
