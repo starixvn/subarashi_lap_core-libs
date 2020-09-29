@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Fanex.Core.Utils.Validations
+namespace Fanex.Core.Utils
 {
     public interface ICurrencyValidation
     {

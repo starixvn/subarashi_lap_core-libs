@@ -1,10 +1,9 @@
-﻿using Fanex.Core.Authentication.Abstractions;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 
 namespace Fanex.Core.Authentication
 {
     public interface IPrincipalGenerater<in T>
-       where T : IAuthInfo
+       where T : class
     {
         ClaimsPrincipal Generate(T authInfo, string authType);
     }

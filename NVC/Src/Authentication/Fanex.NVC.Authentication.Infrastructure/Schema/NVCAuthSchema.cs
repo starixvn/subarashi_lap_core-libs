@@ -1,4 +1,4 @@
-﻿namespace Fanex.NVC.Authentication
+﻿namespace Fanex.NVC.Authentication.Infrastructure
 {
     public static class NVCAuthSchema
     {

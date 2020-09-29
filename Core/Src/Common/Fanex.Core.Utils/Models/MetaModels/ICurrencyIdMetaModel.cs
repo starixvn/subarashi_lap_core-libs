@@ -1,4 +1,4 @@
-﻿namespace Fanex.Core.Utils.Models
+﻿namespace Fanex.Core.Utils
 {
     public interface ICurrencyIdMetaModel
     {

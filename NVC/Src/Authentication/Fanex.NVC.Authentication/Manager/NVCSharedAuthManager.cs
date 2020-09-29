@@ -1,8 +1,5 @@
-﻿using Fanex.Core.Authentication.Abstractions;
-using Fanex.Core.Authentication.Models;
-using Fanex.Core.Authentication.Services;
+﻿using Fanex.Core.Authentication;
 using Fanex.Core.Utils;
-using Fanex.NVC.Authentication.Services;
 using System;
 
 namespace Fanex.NVC.Authentication

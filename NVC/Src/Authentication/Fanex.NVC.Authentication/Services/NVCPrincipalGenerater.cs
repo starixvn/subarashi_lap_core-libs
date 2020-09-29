@@ -1,8 +1,8 @@
-﻿using Fanex.NVC.Authentication.Models;
+﻿using Fanex.NVC.Authentication.Infrastructure;
 using System.Security.Claims;
 using System.Security.Principal;
 
-namespace Fanex.NVC.Authentication.Services
+namespace Fanex.NVC.Authentication
 {
     public class NVCPrincipalGenerater : INVCPrincipalGenerater
     {

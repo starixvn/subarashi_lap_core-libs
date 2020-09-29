@@ -8,6 +8,7 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <ApplicationIcon />
     <Win32Resource />
+    <Version>1.0.2</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
@@ -23,6 +24,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Core\Src\Authentication\Fanex.Core.Authentication\Fanex.Core.Authentication.csproj" />
-    <ProjectReference Include="..\..\..\..\Core\Src\Common\Fanex.Core.Utils\Fanex.Core.Utils.csproj" />
+    <ProjectReference Include="..\Fanex.NVC.Authentication.Infrastructure\Fanex.NVC.Authentication.Infrastructure.csproj" />
   </ItemGroup>
 </Project>

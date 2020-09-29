@@ -1,10 +1,8 @@
-﻿using Fanex.Core.Authentication.Abstractions;
-using Fanex.Core.Authentication.Models;
-using Fanex.Core.Authentication.Services;
-using Fanex.NVC.Authentication.Models;
+﻿using Fanex.Core.Authentication;
+using Fanex.NVC.Authentication.Infrastructure;
 using System.Threading.Tasks;
 
-namespace Fanex.NVC.Authentication.Services
+namespace Fanex.NVC.Authentication
 {
     public class NVCAuthSharedSessionStrategy : BaseAuthSharedSessionStrategy<AuthSharedSessionOption>, INVCAuthStrategy
     {

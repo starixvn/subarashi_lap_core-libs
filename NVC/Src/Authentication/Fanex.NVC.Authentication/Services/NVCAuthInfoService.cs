@@ -1,5 +1,5 @@
-﻿using Fanex.Core.Authentication.Services;
-using Fanex.NVC.Authentication.Models;
+﻿using Fanex.Core.Authentication;
+using Fanex.NVC.Authentication.Infrastructure;
 
 #if NET461
 using System.Collections;
@@ -7,7 +7,7 @@ using System.Collections;
 
 using System.Collections.Generic;
 
-namespace Fanex.NVC.Authentication.Services
+namespace Fanex.NVC.Authentication
 {
     public class NVCAuthInfoService : BaseAuthInfoService<NVCAuthInfo>, INVCAuthInfoService
     {
@@ -33,6 +33,7 @@ namespace Fanex.NVC.Authentication.Services
         public string Language => AuthInfo.UserAuthInfo.Language;
         public IDictionary<int, string> CurrencyList => AuthInfo.UserAuthInfo.CurrencyList;
         public IDictionary<int, int[]> CurrencyAgentList => AuthInfo.UserAuthInfo.CurrencyAgentList;
+        public IEnumerable<Brand> BrandList => AuthInfo.UserAuthInfo.BrandList;
         public bool IsAllowedCustomerComm => AuthInfo.LicenseeAuthInfo.IsAllowedCustomerComm;
     }
 }

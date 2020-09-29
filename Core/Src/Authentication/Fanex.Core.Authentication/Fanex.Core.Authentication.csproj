@@ -5,6 +5,7 @@
     <Authors>Howard</Authors>
     <Company>Legion Team</Company>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>1.0.2</Version>
   </PropertyGroup>
 
   <ItemGroup>

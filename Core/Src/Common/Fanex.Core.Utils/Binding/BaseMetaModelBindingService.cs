@@ -1,11 +1,9 @@
-﻿using Fanex.Core.Utils.Helpers;
-using Fanex.Core.Utils.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Fanex.Core.Utils.Binding
+namespace Fanex.Core.Utils
 {
     public class BaseMetaModelBindingService : IMetaModelBindingService
     {
@@ -14,12 +12,22 @@ namespace Fanex.Core.Utils.Binding
             if (MetaModelHelper.IsMetaModel(actionArguments, out IAgentMetaModel itemWithAgent))
             {
                 var currencyIdList = string.Empty;
-                if (MetaModelHelper.IsMetaModel(actionArguments, out ICurrencyIdListMetaModel itemWithCurrency))
+                if (MetaModelHelper.IsMetaModel(actionArguments, out ICurrencyIdListMetaModel itemWithCurrencyIdList))
                 {
-                    currencyIdList = itemWithCurrency.CurrencyIdList;
+                    currencyIdList = itemWithCurrencyIdList.CurrencyIdList;
+                }
+                else if (MetaModelHelper.IsMetaModel(actionArguments, out ICurrencyIdMetaModel itemWithCurrencyId))
+                {
+                    currencyIdList = itemWithCurrencyId.CurrencyId.ToString();
+                }
+                else
+                {
+                    //no thing
                 }
 
-                itemWithAgent.AgentListXml = GenerateAgentListXml(currencyAgentList, currencyIdList);
+                var isExcludedTestData = MetaModelHelper.IsMetaModel(actionArguments, out IDataTestableMetaModel itemWithExcludedTestData) && itemWithExcludedTestData.IsExcludedTestData;
+
+                itemWithAgent.AgentListXml = GenerateAgentListXml(currencyAgentList, currencyIdList, isExcludedTestData);
             }
         }
 
@@ -31,11 +39,18 @@ namespace Fanex.Core.Utils.Binding
             }
         }
 
-        protected static string GenerateAgentListXml(IDictionary<int, int[]> currencyAgentList, string currencyIdList)
+        protected static string GenerateAgentListXml(IDictionary<int, int[]> currencyAgentList, string currencyIdList, bool isExcludeTestData = false)
         {
             if (currencyAgentList == null || !currencyAgentList.Any())
             {
                 return string.Empty;
+            }
+
+            if (isExcludeTestData && currencyAgentList.ContainsKey(CurrencyType.Uus))
+            {
+                currencyAgentList = currencyAgentList
+                    .Where(_ => _.Key != CurrencyType.Uus)
+                    .ToDictionary(_ => _.Key, _ => _.Value);
             }
 
             var actualCurrencyAgentList = GetSelectedCurrencyAgentList(currencyAgentList, currencyIdList);
@@ -60,6 +75,10 @@ namespace Fanex.Core.Utils.Binding
             }
 
             var selectedCurrencyIdList = ParseCurrencyIdList(currencyIdList);
+            if (selectedCurrencyIdList.Any(_ => _ <= 0))
+            {
+                return currencyAgentList;
+            }
 
             return currencyAgentList
                 .Where(x => selectedCurrencyIdList.Contains(x.Key))

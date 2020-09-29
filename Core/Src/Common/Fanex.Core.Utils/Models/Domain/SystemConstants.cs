@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace Fanex.Core.Utils.Models
+namespace Fanex.Core.Utils
 {
     public static class SystemConstants
     {

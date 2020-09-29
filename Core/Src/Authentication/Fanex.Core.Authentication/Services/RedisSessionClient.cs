@@ -1,12 +1,10 @@
-﻿using Fanex.Core.Authentication.Abstractions;
-using Fanex.Core.Authentication.Models;
-using Fanex.Core.Utils;
+﻿using Fanex.Core.Utils;
 using StackExchange.Redis;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Fanex.Core.Authentication.Services
+namespace Fanex.Core.Authentication
 {
     public class RedisSessionClient : ISessionClient
     {

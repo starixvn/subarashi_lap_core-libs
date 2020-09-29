@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>Howard</Authors>
+    <Company>Legion Team</Company>
+    <Product>NVC Authentication</Product>
+    <Version>1.0.2</Version>
+  </PropertyGroup>
+
+</Project>

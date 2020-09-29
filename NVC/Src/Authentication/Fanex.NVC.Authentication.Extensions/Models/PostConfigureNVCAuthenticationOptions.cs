@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 
-namespace Fanex.NVC.Authentication.Extensions.Models
+namespace Fanex.NVC.Authentication.Extensions
 {
     public class PostConfigureNVCAuthenticationOptions : IPostConfigureOptions<NVCAuthenticationOptions>
     {

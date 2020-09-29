@@ -1,11 +1,11 @@
-﻿using Fanex.NVC.Authentication.Services;
+﻿using Fanex.NVC.Authentication.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace Fanex.NVC.Authentication.Extensions.Attributes
+namespace Fanex.NVC.Authentication.Extensions
 {
     [AttributeUsage(AttributeTargets.Method | AttributeTargets.Class, AllowMultiple = false)]
     public class NVCAuthorizeAttribute : TypeFilterAttribute

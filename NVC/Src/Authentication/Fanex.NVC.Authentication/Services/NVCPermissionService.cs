@@ -1,8 +1,8 @@
-﻿using Fanex.NVC.Authentication.Models;
+﻿using Fanex.NVC.Authentication.Infrastructure;
 using System;
 using System.Linq;
 
-namespace Fanex.NVC.Authentication.Services
+namespace Fanex.NVC.Authentication
 {
     public class NVCPermissionService : INVCPermissionService
     {

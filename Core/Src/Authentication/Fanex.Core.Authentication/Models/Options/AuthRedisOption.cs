@@ -1,4 +1,4 @@
-﻿namespace Fanex.Core.Authentication.Models
+﻿namespace Fanex.Core.Authentication
 {
     public class AuthRedisOption
     {

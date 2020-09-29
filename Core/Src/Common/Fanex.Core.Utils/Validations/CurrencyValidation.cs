@@ -1,9 +1,8 @@
-﻿using Fanex.Core.Utils.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Fanex.Core.Utils.Validations
+namespace Fanex.Core.Utils
 {
     public class CurrencyValidation : ICurrencyValidation
     {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Fanex.Core.Utils.Helpers
+namespace Fanex.Core.Utils
 {
     public static class MetaModelHelper
     {

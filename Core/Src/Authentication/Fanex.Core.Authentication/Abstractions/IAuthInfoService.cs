@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Fanex.Core.Authentication.Services
+namespace Fanex.Core.Authentication
 {
     public interface IAuthInfoService
     {

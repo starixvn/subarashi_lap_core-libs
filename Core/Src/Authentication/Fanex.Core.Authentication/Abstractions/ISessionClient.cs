@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Fanex.Core.Authentication.Abstractions
+namespace Fanex.Core.Authentication
 {
     public interface ISessionClient
     {

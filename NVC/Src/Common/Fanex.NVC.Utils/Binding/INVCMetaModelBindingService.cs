@@ -1,7 +1,7 @@
-﻿using Fanex.Core.Utils.Binding;
+﻿using Fanex.Core.Utils;
 using System.Collections.Generic;
 
-namespace Fanex.NVC.Utils.Binding
+namespace Fanex.NVC.Utils
 {
     public interface INVCMetaModelBindingService : IMetaModelBindingService
     {

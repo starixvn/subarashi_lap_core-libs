@@ -1,11 +1,12 @@
-﻿using Fanex.Core.Authentication.Services;
-using Fanex.NVC.Authentication.Models;
+﻿using Fanex.Core.Authentication;
+using Fanex.NVC.Authentication.Infrastructure;
 using System.Collections.Generic;
 
-namespace Fanex.NVC.Authentication.Services
+namespace Fanex.NVC.Authentication
 {
     public interface INVCAuthInfoService : IAuthInfoService
     {
         IEnumerable<NVCFunctionAuthInfo> FunctionList { get; }
+        IEnumerable<Brand> BrandList { get; }
     }
 }

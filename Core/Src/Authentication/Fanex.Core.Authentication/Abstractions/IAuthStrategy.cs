@@ -1,10 +1,9 @@
-﻿using Fanex.Core.Authentication.Abstractions;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace Fanex.Core.Authentication
 {
     public interface IAuthStrategy<T>
-        where T : IAuthInfo
+        where T : class
     {
         Task<T> AuthenticateAsync(string token);
 

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Fanex.Core.Utils.Binding
+namespace Fanex.Core.Utils
 {
     public interface IMetaModelBindingService
     {

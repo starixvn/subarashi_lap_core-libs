@@ -1,6 +1,6 @@
-﻿namespace Fanex.Core.Utils.Models
+﻿namespace Fanex.Core.Utils
 {
-    internal interface IDataTestableMetaModel
+    public interface IDataTestableMetaModel
     {
         bool IsExcludedTestData { get; set; }
     }

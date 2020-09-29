@@ -1,11 +1,10 @@
-﻿using Fanex.NVC.Authentication.Services;
-using Microsoft.AspNetCore.Authentication;
+﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 using System;
 using System.Linq;
 
-namespace Fanex.NVC.Authentication.Extensions.Models
+namespace Fanex.NVC.Authentication.Extensions
 {
     public class NVCAuthenticationOptions : AuthenticationSchemeOptions
     {

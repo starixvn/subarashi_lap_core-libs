@@ -1,8 +1,6 @@
-﻿using Fanex.Core.Authentication.Abstractions;
-using Fanex.Core.Authentication.Models;
-using System;
+﻿using System;
 
-namespace Fanex.Core.Authentication.Services
+namespace Fanex.Core.Authentication
 {
     public abstract class BaseAuthSharedSessionStrategy<TOptions>
         where TOptions : AuthSharedSessionOption

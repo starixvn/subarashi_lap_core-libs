@@ -6,6 +6,7 @@
     <Company>Legion Team</Company>
     <Product>NVC Utils</Product>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>1.0.2</Version>
   </PropertyGroup>
 
   <ItemGroup>

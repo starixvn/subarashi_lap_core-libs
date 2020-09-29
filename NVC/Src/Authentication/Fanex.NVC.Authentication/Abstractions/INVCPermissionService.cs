@@ -1,4 +1,6 @@
-﻿namespace Fanex.NVC.Authentication.Services
+﻿using Fanex.NVC.Authentication.Infrastructure;
+
+namespace Fanex.NVC.Authentication
 {
     public interface INVCPermissionService
     {

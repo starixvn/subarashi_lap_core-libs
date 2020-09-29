@@ -1,6 +1,4 @@
-﻿using Fanex.NVC.Authentication.Extensions.Handlers;
-using Fanex.NVC.Authentication.Extensions.Models;
-using Fanex.NVC.Authentication.Services;
+﻿using Fanex.NVC.Authentication.Infrastructure;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;

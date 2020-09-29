@@ -1,12 +1,11 @@
-﻿using Fanex.NVC.Authentication.Models;
-using Fanex.NVC.Authentication.Extensions.Models;
+﻿using Fanex.NVC.Authentication.Infrastructure;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 
-namespace Fanex.NVC.Authentication.Extensions.Handlers
+namespace Fanex.NVC.Authentication.Extensions
 {
     public class NVCAuthenticationHandler : AuthenticationHandler<NVCAuthenticationOptions>
     {
@@ -30,7 +29,6 @@ namespace Fanex.NVC.Authentication.Extensions.Handlers
                     return AuthenticateResult.Success(ticket);
                 }
             }
-
             return AuthenticateResult.NoResult();
         }
 

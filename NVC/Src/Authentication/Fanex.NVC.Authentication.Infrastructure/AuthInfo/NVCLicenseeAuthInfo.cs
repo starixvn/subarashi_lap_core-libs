@@ -1,10 +1,9 @@
-﻿using Fanex.Core.Authentication.Abstractions;
-using System;
+﻿using System;
 
-namespace Fanex.NVC.Authentication.Models
+namespace Fanex.NVC.Authentication.Infrastructure
 {
     [Serializable]
-    public class NVCLicenseeAuthInfo : ILicenseeAuthInfo
+    public class NVCLicenseeAuthInfo
     {
         public int LicenseeId { get; set; }
 
