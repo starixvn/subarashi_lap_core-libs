@@ -1,0 +1,43 @@
+var path = require('path');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+
+module.exports = {
+    mode: 'production',
+    entry: {
+        'app': './example/app.js',
+        'style': './example/style.scss'
+    },
+    output: {
+        filename: '[name].js',
+        path: path.resolve(__dirname, './example/dist/')
+    },
+    resolve: {
+        extensions: [".js", ".jsx"],
+    },
+    module: {
+        rules: [{
+                test: /\.(js|jsx)$/,
+                use: 'babel-loader',
+                exclude: /node_modules/,
+            },
+            {
+                test: /\.(sc|c)ss$/,
+                use: [
+                    MiniCssExtractPlugin.loader,
+                      'css-loader?url=false',
+                      'sass-loader',
+                ]
+            }
+        ]
+    },
+    plugins: [
+        new MiniCssExtractPlugin({ filename: "[name].css", chunkFilename: '[id].css'})
+    ],
+    devServer: {
+        contentBase: path.join(__dirname, "./example"),
+        compress: true,
+        port: 9001
+    },
+    devtool: "source-map",
+    watch: true
+}
