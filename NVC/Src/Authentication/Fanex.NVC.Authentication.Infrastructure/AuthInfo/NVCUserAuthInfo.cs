@@ -17,5 +17,6 @@ namespace Fanex.NVC.Authentication.Infrastructure
         public IEnumerable<Brand> BrandList { get; set; }
         public string DefaultBaseCurrency { get; set; }
         public string DefaultReportUrl { get; set; }
+        public bool IsLicenseeUser { get; set; }
     }
 }
