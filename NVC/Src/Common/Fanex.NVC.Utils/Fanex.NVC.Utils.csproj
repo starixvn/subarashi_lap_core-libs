@@ -1,16 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net461</TargetFrameworks>
     <Authors>Howard</Authors>
     <Company>Legion Team</Company>
     <Product>NVC Utils</Product>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\Core\Src\Common\Fanex.Core.Utils\Fanex.Core.Utils.csproj" />
+    <ProjectReference Include="..\..\Authentication\Fanex.NVC.Authentication.Infrastructure\Fanex.NVC.Authentication.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

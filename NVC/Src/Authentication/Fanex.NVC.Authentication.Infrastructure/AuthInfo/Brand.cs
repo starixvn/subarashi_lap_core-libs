@@ -10,5 +10,7 @@ namespace Fanex.NVC.Authentication.Infrastructure
         public string Name { get; set; }
         public string FunctionKey { get; set; }
         public IDictionary<int, string> TpCurrencyList { get; set; }
+        public IDictionary<int, string> CurrencyList { get; set; }
+        public IDictionary<int, int[]> CurrencyAgentList { get; set; }
     }
 }
