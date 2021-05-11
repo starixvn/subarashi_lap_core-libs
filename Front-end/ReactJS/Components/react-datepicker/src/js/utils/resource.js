@@ -1,0 +1,32 @@
+const _resource_default = {
+    Jan: 'Jan',
+    Feb: 'Feb',
+    Mar: 'Mar',
+    Apr: 'Apr',
+    May: 'May',
+    Jun: 'Jun',
+    Jul: 'Jul',
+    Aug: 'Aug',
+    Sep: 'Sep',
+    Oct: 'Oct',
+    Nov: 'Nov',
+    Dec: 'Dec',
+    Su: 'Su',
+    Mo: 'Mo',
+    Tu: 'Tu',
+    We: 'We',
+    Th: 'Th',
+    Fr: 'Fr',
+    Sa: 'Sa',
+    Today: 'Today',
+    Yesterday: 'Yesterday',
+    Currentweek: 'Current week',
+    Lastweek: 'Last week',
+    Currentmonth: 'Current month',
+    Lastmonth: 'Last month',
+    Sincelastmonth: 'Since last month',
+    OK: 'OK',
+    Cancel: 'Cancel'
+}
+
+export default (langHandler, key) => langHandler ? langHandler(key) : (_resource_default[key] || key)

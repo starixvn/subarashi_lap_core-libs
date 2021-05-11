@@ -13,14 +13,15 @@ class DateRange extends Component {
   constructor(props, context) {
     super(props, context);
 
-    const { format, linkedCalendars, theme } = props;
+    const { format, linkedCalendars, theme, langHandler } = props;
 
     const startDate = parseInput(props.startDate, format, 'startOf');
     const endDate = parseInput(props.endDate, format, 'endOf');
     this.styles = getTheme(theme);
     this.calendarSelectionStep = 0;
-    this.locale = { ...defaultOptions.locale, ...props.locale };
-    this.ranges = props.ranges || defaultOptions.ranges(props.today, props.minDate, props.maxDate, props.limitedMonthRange);
+    
+    this.locale = { ...defaultOptions.locale(langHandler), ...props.locale };
+    this.ranges = props.ranges || defaultOptions.ranges(props.today, props.minDate, props.maxDate, props.limitedMonthRange, langHandler);
 
     this.isValid = true;
     this.originalRange = { startDate, endDate };
@@ -255,6 +256,7 @@ DateRange.propTypes = {
   endDate: PropTypes.oneOfType([PropTypes.object, PropTypes.func, PropTypes.string]),
   minDate: PropTypes.oneOfType([PropTypes.object, PropTypes.func, PropTypes.string]),
   maxDate: PropTypes.oneOfType([PropTypes.object, PropTypes.func, PropTypes.string]),
+  langHandler: PropTypes.func,
   dateLimit: PropTypes.func,
   ranges: PropTypes.object,
   linkedCalendars: PropTypes.bool,

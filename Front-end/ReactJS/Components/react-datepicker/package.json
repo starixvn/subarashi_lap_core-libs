@@ -1,7 +1,7 @@
 {
-    "name": "@9softstudio/react-datepicker",
-    "version": "1.0.3",
-    "description": "React Date Picker",
+    "name": "@legion-lib/react-daterangepicker",
+    "version": "1.0.",
+    "description": "React Date Range Picker",
     "main": "dist/index.js",
     "scripts": {
         "start": "node_modules/.bin/webpack-dev-server --config webpack.example.config.js --hot --inline --progress --watch-content-base",
@@ -14,12 +14,7 @@
         "react-date-picker",
         "date-range"
     ],
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/9softstudio/React-components.git"
-    },
-    "homepage": "https://github.com/9softstudio/React-components",
-    "author": "walter",
+    "author": "legion",
     "license": "MIT",
     "devDependencies": {
         "babel-core": "^6.26.3",

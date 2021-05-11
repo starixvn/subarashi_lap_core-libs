@@ -13,9 +13,9 @@ export default class DatePicker extends Component {
     constructor(props) {
         super(props);
 
-        const { locale, date, format } = props;
+        const { locale, date, format, langHandler } = props;
 
-        this.locale = { ...defaultOptions.locale, ...locale };
+        this.locale = { ...defaultOptions.locale(langHandler), ...locale };
 
         const selectedDate = parseInput(date, format, 'startOf');
         this.state = {

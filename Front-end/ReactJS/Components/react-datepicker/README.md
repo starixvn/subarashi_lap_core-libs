@@ -3,11 +3,8 @@ react date picker
 React 16
 ## Install
 ```
-npm i @9softstudio/react-datepicker --save-dev
+npm i @legion-lib/react-datepicker
 ```
-## Demos
-### [react-datepicker](https://9softstudio.github.io/React-components/react-datepicker/example/index.html)
-
 ## Usage
 ```javascript
 import React from 'react';
