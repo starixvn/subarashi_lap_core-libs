@@ -34,7 +34,9 @@ namespace Fanex.NVC.Authentication
         public IDictionary<int, string> CurrencyList => AuthInfo.UserAuthInfo.CurrencyList;
         public IDictionary<int, int[]> CurrencyAgentList => AuthInfo.UserAuthInfo.CurrencyAgentList;
         public IEnumerable<Brand> BrandList => AuthInfo.UserAuthInfo.BrandList;
+        public int DataRangeLimitation => AuthInfo.UserAuthInfo.DataRangeLimitation;
         public bool IsAllowedCustomerComm => AuthInfo.LicenseeAuthInfo.IsAllowedCustomerComm;
         public bool IsLicenseeUser => AuthInfo.UserAuthInfo.IsLicenseeUser;
+        public IEnumerable<string> OfferedSubProductList => AuthInfo.LicenseeAuthInfo.OfferedSubProductList;
     }
 }

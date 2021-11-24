@@ -16,7 +16,9 @@ namespace Fanex.NVC.Authentication.Infrastructure
         public bool SupportMultiBrand { get; set; }
         public IEnumerable<Brand> BrandList { get; set; }
         public string DefaultBaseCurrency { get; set; }
+        public int DataRangeLimitation { get; set; }
         public string DefaultReportUrl { get; set; }
         public bool IsLicenseeUser { get; set; }
+        public bool IsShowIpvn { get; set; }
     }
 }

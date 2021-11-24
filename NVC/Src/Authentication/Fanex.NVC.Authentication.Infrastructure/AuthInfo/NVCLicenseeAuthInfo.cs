@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Fanex.NVC.Authentication.Infrastructure
 {
@@ -12,5 +13,7 @@ namespace Fanex.NVC.Authentication.Infrastructure
         public bool IsAllowedCustomerComm { get; set; }
 
         public bool IsEnableBA { get; set; }
+
+        public IEnumerable<string> OfferedSubProductList { get; set; }
     }
 }

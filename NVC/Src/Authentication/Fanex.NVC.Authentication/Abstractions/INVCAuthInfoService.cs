@@ -8,6 +8,8 @@ namespace Fanex.NVC.Authentication
     {
         IEnumerable<NVCFunctionAuthInfo> FunctionList { get; }
         IEnumerable<Brand> BrandList { get; }
+        int DataRangeLimitation { get; }
         bool IsLicenseeUser { get; }
+        IEnumerable<string> OfferedSubProductList { get; }
     }
 }
