@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.852
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NVC", "NVC", "{3D8BD056-8E46-4B19-B5BE-F3CC15019B2D}"
 EndProject
@@ -43,7 +43,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Authentication", "Authentic
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{DC0C1931-DB83-4A32-B376-9D1BD26EA34E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NVC.Authentication.Infrastructure", "NVC\Src\Authentication\Fanex.NVC.Authentication.Infrastructure\Fanex.NVC.Authentication.Infrastructure.csproj", "{92C8E112-0E12-4C56-A5CF-F786A890371B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fanex.NVC.Authentication.Infrastructure", "NVC\Src\Authentication\Fanex.NVC.Authentication.Infrastructure\Fanex.NVC.Authentication.Infrastructure.csproj", "{92C8E112-0E12-4C56-A5CF-F786A890371B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fanex.IdentityModel", "Core\Src\Authentication\Fanex.IdentityModel\Fanex.IdentityModel.csproj", "{DB3D2F06-0964-4384-8765-37429F5B0A84}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -75,6 +77,10 @@ Global
 		{92C8E112-0E12-4C56-A5CF-F786A890371B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{92C8E112-0E12-4C56-A5CF-F786A890371B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{92C8E112-0E12-4C56-A5CF-F786A890371B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB3D2F06-0964-4384-8765-37429F5B0A84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB3D2F06-0964-4384-8765-37429F5B0A84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB3D2F06-0964-4384-8765-37429F5B0A84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB3D2F06-0964-4384-8765-37429F5B0A84}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -98,6 +104,7 @@ Global
 		{09F068E0-827D-4F6C-B075-DEFFCFF47007} = {F20E6FD4-3B26-4730-80A4-D17A26B680EA}
 		{DC0C1931-DB83-4A32-B376-9D1BD26EA34E} = {F20E6FD4-3B26-4730-80A4-D17A26B680EA}
 		{92C8E112-0E12-4C56-A5CF-F786A890371B} = {D4C54075-8D65-414B-B085-789B10675BD8}
+		{DB3D2F06-0964-4384-8765-37429F5B0A84} = {1EBAC08D-F76B-45CD-B4D5-FB2C9C0FC93F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BFB21418-8649-4DE3-9DA7-889F18C7DCB7}
