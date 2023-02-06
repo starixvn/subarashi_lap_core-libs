@@ -2,11 +2,15 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Authors>Howard</Authors>
+    <Authors>Hogan</Authors>
     <Company>Legion Team</Company>
     <Product>Legion Core Libs</Product>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
+    <PackageId>Fanex.Core.Utils</PackageId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Fanex.Data" Version="4.2.2" />
+  </ItemGroup>
 </Project>
