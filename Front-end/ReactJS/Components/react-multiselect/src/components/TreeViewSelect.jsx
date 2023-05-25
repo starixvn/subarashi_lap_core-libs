@@ -268,6 +268,7 @@ export default class TreeViewSelect extends Component {
         }
 
         return <SearchBox
+            language={this.props.language}
             onChangeSearchText={this.onChangeSearchText}
             value={this.state.searchText}
             onClearSearch={this.onClearSearch}

@@ -202,6 +202,7 @@ export default class MultipleSelect extends Component {
         }
 
         return <SearchBox
+            language={this.props.language}
             onChangeSearchText={this.onChangeSearchText}
             value={this.state.searchText}
             onClearSearch={this.onClearSearch}

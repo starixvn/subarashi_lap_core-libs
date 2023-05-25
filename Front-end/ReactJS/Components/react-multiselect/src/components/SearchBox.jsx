@@ -1,7 +1,8 @@
 import React from 'react';
+import Translation from './translation'
 
 const SearchBox = React.forwardRef((props, ref) => {
-    const { onClearSearch, onChangeSearchText, ...inputAttributes } = props;
+    const { onClearSearch, onChangeSearchText, language, ...inputAttributes } = props;
 
     const closeButtonStyle = {
         position: "absolute",
@@ -16,9 +17,11 @@ const SearchBox = React.forwardRef((props, ref) => {
         height: 16,
         width: 16
     }
+    const translation= Translation[language];
+    const placeholderText = translation.SearchData;
 
     return (<div style={{ width: "100%", position: "relative" }}>
-        <input autoFocus ref={ref} type="text" placeholder="Search data"
+        <input autoFocus ref={ref} type="text" placeholder={placeholderText}
             style={{
                 width: "100%", border: "1px solid #ccc", padding: "5px 10px",
                 boxSizing: "border-box",
