@@ -11,12 +11,12 @@ namespace Fanex.NVC.Authentication.Infrastructure
         public string Language { get; set; }
         public int OnUserId { get; set; }
         public IEnumerable<NVCFunctionAuthInfo> FunctionList { get; set; }
+        public IEnumerable<NVCSettingAuthInfo> SettingList { get; set; }
         public IDictionary<int, string> CurrencyList { get; set; }
         public IDictionary<int, int[]> CurrencyAgentList { get; set; }
         public bool SupportMultiBrand { get; set; }
         public IEnumerable<Brand> BrandList { get; set; }
         public string DefaultBaseCurrency { get; set; }
-        public int DataRangeLimitation { get; set; }
         public string DefaultReportUrl { get; set; }
         public bool IsLicenseeUser { get; set; }
         public bool IsShowIpvn { get; set; }
