@@ -5,6 +5,11 @@ $indexNormal: 100;
 .multiple-select {
     &-container {
         position: relative;
+        &.invalid{
+            .multiple-select-label{
+                border-bottom-color: red;
+            }
+        }
     }
     &-default {
         box-sizing: $box-sizing;

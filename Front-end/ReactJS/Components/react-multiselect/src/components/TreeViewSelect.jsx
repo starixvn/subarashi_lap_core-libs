@@ -41,6 +41,7 @@ export default class TreeViewSelect extends Component {
         hasSearchBox: PropTypes.bool,
         isAllTextShown: PropTypes.bool,
         texts: PropTypes.object,
+        isValid: PropTypes.bool,
         treeViewOption: PropTypes.shape({
             childrenField: PropTypes.string,
             keyField: PropTypes.string,
@@ -58,7 +59,8 @@ export default class TreeViewSelect extends Component {
         valueField: VALUE_NAME,
         statusField: STATUS_NAME,
         hasAllOption: true,
-        hasSearchBox: false
+        hasSearchBox: false,
+        isValid: true
     }
 
     componentDidMount() {
@@ -268,6 +270,7 @@ export default class TreeViewSelect extends Component {
         }
 
         return <SearchBox
+            language={this.props.language}
             onChangeSearchText={this.onChangeSearchText}
             value={this.state.searchText}
             onClearSearch={this.onClearSearch}
@@ -279,7 +282,7 @@ export default class TreeViewSelect extends Component {
         const actualTreeViewOption = (treeViewOption && { ...defaultTreeViewOption, ...treeViewOption }) || { ...defaultTreeViewOption };
 
         return (
-            <div className="multiple-select-container" id={this.id} ref={element => this.wrapper = element}>
+            <div className={`multiple-select-container ${this.props.isValid ? "" : "invalid"}`} id={this.id} ref={element => this.wrapper = element}>
                 {
                     <MultipleSelectLabel
                         language={this.props.language}

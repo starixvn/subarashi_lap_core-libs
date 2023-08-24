@@ -44,11 +44,12 @@ export default class Option extends Component {
 
     render() {
         const { itemData, id, treeViewOption, hasChildren } = this.props;
-        const { value, checked, level } = itemData;
+        const { value, checked, level, valueDecoration } = itemData;
         const itemClassName = `multiple-select-item ${treeViewOption ? 'treeview-select-item' : ''} level-${level}`;
         const itemStyle = treeViewOption ? { paddingLeft: level * treeViewOption.indent } : null;
 
         const caretClassName = this.state.isCollapse ? 'treeview-caret collapse' : 'treeview-caret';
+        const valueClassName = `option-label${valueDecoration ? ` ${valueDecoration}` : ''}`;
 
         return (
             <li className={itemClassName} style={itemStyle}>
@@ -63,7 +64,7 @@ export default class Option extends Component {
                     checked={checked}
                     onChange={this.onChange}
                 />
-                <label className="option-label" htmlFor={id}>
+                <label className={valueClassName} htmlFor={id}>
                     {value}
                 </label>
             </li>
