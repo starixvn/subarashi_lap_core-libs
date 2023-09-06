@@ -213,10 +213,11 @@ export default class MultipleSelect extends Component {
 
     render() {
         const { maxDisplayItemCount } = this.props;
-    
+        const className = "multiple-select-container" + (this.props.isValid ? "" : " invalid");
+
         return (
-            <div className={`multiple-select-container ${this.props.isValid ? "" : "invalid"}`} id={this.id} ref={element => this.wrapper = element}>
-                 {
+            <div className={className} id={this.id} ref={element => this.wrapper = element}>
+                {
                 <MultipleSelectLabel
                     language={this.props.language}
                     selectedItems={this.selectedItems}
@@ -226,7 +227,7 @@ export default class MultipleSelect extends Component {
                     isAllTextShown={this.props.isAllTextShown}
                     maxDisplayItemCount={maxDisplayItemCount}
                     isValid={this.props.isValid} />
-                 }
+                }
                 <div className="multiple-select-default multiple-select-options-container"
                 style={{ display: this.state.showOptionList ? "block" : "none" }}>
                     {this._renderSearchBox()}

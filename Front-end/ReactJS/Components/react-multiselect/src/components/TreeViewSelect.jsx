@@ -280,9 +280,10 @@ export default class TreeViewSelect extends Component {
     render() {
         const { maxDisplayItemCount, treeViewOption } = this.props;
         const actualTreeViewOption = (treeViewOption && { ...defaultTreeViewOption, ...treeViewOption }) || { ...defaultTreeViewOption };
-
+        const className = "multiple-select-container" + (this.props.isValid ? "" : " invalid");
+        
         return (
-            <div className={`multiple-select-container ${this.props.isValid ? "" : "invalid"}`} id={this.id} ref={element => this.wrapper = element}>
+            <div className={className} id={this.id} ref={element => this.wrapper = element}>
                 {
                     <MultipleSelectLabel
                         language={this.props.language}
