@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Option from './Option'
-import Translation from './translation'
+import { GetTextResources } from './translation'
 
 const DEFAULT_CHECKED = false;
 
@@ -11,7 +11,7 @@ export default class OptionAll extends Component {
 
         this.itemData = {
             key: 'All',
-            value: Translation[this.props.language].All
+            value: GetTextResources(this.props.language, "All")
         }
     }
 

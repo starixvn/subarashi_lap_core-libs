@@ -1,4 +1,7 @@
-export default  {
+const DEFAULT_RESOURCE_NAME = "_language_en_US";
+const DEFAULT_LANG_CODE = "en-US";
+
+const RESOURCES =  {
     "en-US": {
         All: 'All',
         SelectedItemCount: "# selected",
@@ -24,3 +27,15 @@ export default  {
         SearchData: "搜寻数据"
     },
 }
+
+function GetTextResources(language, key) {
+    const langCode = language || "en-US";
+    const resourceName = `_language_${langCode.replace("-", "_")}`;
+    var langHandler = window[resourceName];
+
+    return (langHandler && langHandler[key]) || (window[DEFAULT_RESOURCE_NAME] && window[DEFAULT_RESOURCE_NAME][key]) 
+        || (RESOURCES[langCode] && RESOURCES[langCode][key]) || (RESOURCES[DEFAULT_LANG_CODE] && RESOURCES[DEFAULT_LANG_CODE][key])
+        || key;
+};
+
+export { GetTextResources };

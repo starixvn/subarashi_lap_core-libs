@@ -1,5 +1,5 @@
 import React from 'react';
-import Translation from './translation'
+import { GetTextResources } from './translation'
 
 const SearchBox = React.forwardRef((props, ref) => {
     const { onClearSearch, onChangeSearchText, language, ...inputAttributes } = props;
@@ -17,8 +17,8 @@ const SearchBox = React.forwardRef((props, ref) => {
         height: 16,
         width: 16
     }
-    const translation= Translation[language];
-    const placeholderText = translation.SearchData;
+
+    const placeholderText = GetTextResources(language, "SearchData");
 
     return (<div style={{ width: "100%", position: "relative" }}>
         <input autoFocus ref={ref} type="text" placeholder={placeholderText}
