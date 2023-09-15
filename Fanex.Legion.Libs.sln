@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30717.126
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NVC", "NVC", "{3D8BD056-8E46-4B19-B5BE-F3CC15019B2D}"
 EndProject
@@ -47,6 +47,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fanex.NVC.Authentication.In
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fanex.IdentityModel", "Core\Src\Authentication\Fanex.IdentityModel\Fanex.IdentityModel.csproj", "{DB3D2F06-0964-4384-8765-37429F5B0A84}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fanex.ThirdParty.ExchangeProduct", "Core\Src\Common\Fanex.ThirdParty.ExchangeProduct\Fanex.ThirdParty.ExchangeProduct.csproj", "{0BECA4B5-2043-4566-997A-6F93A6A4524B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,6 +83,10 @@ Global
 		{DB3D2F06-0964-4384-8765-37429F5B0A84}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB3D2F06-0964-4384-8765-37429F5B0A84}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB3D2F06-0964-4384-8765-37429F5B0A84}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BECA4B5-2043-4566-997A-6F93A6A4524B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BECA4B5-2043-4566-997A-6F93A6A4524B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BECA4B5-2043-4566-997A-6F93A6A4524B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BECA4B5-2043-4566-997A-6F93A6A4524B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -105,6 +111,7 @@ Global
 		{DC0C1931-DB83-4A32-B376-9D1BD26EA34E} = {F20E6FD4-3B26-4730-80A4-D17A26B680EA}
 		{92C8E112-0E12-4C56-A5CF-F786A890371B} = {D4C54075-8D65-414B-B085-789B10675BD8}
 		{DB3D2F06-0964-4384-8765-37429F5B0A84} = {1EBAC08D-F76B-45CD-B4D5-FB2C9C0FC93F}
+		{0BECA4B5-2043-4566-997A-6F93A6A4524B} = {A05F94BA-A4E0-4AAA-A2BB-D282B0367057}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BFB21418-8649-4DE3-9DA7-889F18C7DCB7}

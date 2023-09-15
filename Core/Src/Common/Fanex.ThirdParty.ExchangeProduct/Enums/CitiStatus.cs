@@ -1,0 +1,40 @@
+﻿namespace Fanex.ThirdParty.ExchangeProduct.Enums
+{
+    public enum CitiStatus
+    {
+        Fail = 0,
+        Success = 1,
+        Not_Authorized = 1001,
+        Insufficient_parameters = 1002,
+        Invalid_parameters = 1003,
+        Invalid_URL = 1004,
+        Userid_is_invalid = 1005,
+        Username_is_invalid = 1006,
+        Exposure_limit_is_invalid = 1007,
+        Invalid_Agent = 1008,
+        Account_Lock = 1009,
+        Query_too_fast = 1010,
+        System_logout = 1011,
+        This_action_already_completed = 1012,
+        Insufficient_balance = 1013,
+        No_data = 1014,
+        Invalid_Date = 1015,
+        Invalid_bet_status_type = 1016,
+        Query_over_three_months = 1017,
+        Account_already_unSuspended = 1018,
+        Account_profit_loss_over_than_max_win_limit = 1019,
+        Invalid_time_zone = 1020,
+        Invalid_get_key_token = 1021,
+        Invalid_Commission = 1022,
+        Update_Commission_Error = 0x3FF,
+        Agent_not_active = 0x400,
+        This_operation_not_exist = 1025,
+        enter_too_many_users = 1026,
+        Invalid_MarketId = 1027,
+        Invalid_EventId = 1028,
+        Query_over_one_day = 1029,
+        Under_Maintainence = 1041,
+        Not_allowed_country = 5001,
+        Not_allowed_currency = 5002
+    }
+}
