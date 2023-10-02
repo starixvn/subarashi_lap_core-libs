@@ -8,6 +8,8 @@ namespace Fanex.ThirdParty.ExchangeProduct.HttpClients
 {
     public interface IExchangeHttpClient
     {
+        Task<bool> IsUnderMaintenance();
+
         Task<ResponseResult<GetProfile>> GetProfileAsync(GetProfileParam param);
 
         Task<ResponseResult<CommissionInfo>> UpdateCommissionAsync(UpdateCommissionParam param);
