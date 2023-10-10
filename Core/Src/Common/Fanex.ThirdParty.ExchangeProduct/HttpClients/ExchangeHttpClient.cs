@@ -1,24 +1,24 @@
-﻿using Fanex.ThirdParty.ExchangeProduct.Exceptions;
-using Fanex.ThirdParty.ExchangeProduct.Model;
-using Fanex.ThirdParty.ExchangeProduct.Params;
-using Newtonsoft.Json;
-using System;
-using System.IO;
+﻿using System;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Fanex.ThirdParty.ExchangeProduct.Constant;
+using Fanex.ThirdParty.ExchangeProduct.Enums;
+using Fanex.ThirdParty.ExchangeProduct.Exceptions;
+using Fanex.ThirdParty.ExchangeProduct.Model;
+using Fanex.ThirdParty.ExchangeProduct.Params;
+using Newtonsoft.Json;
 
 namespace Fanex.ThirdParty.ExchangeProduct.HttpClients
 {
     public class ExchangeHttpClient : IExchangeHttpClient
     {
         private const string JsonContentType = "application/json";
-        private const int SuccessResultCode = 0;
 
         private readonly HttpClient _httpClient;
         private readonly ExchangeOption _option;
 
-        private string BaseAddress => string.IsNullOrWhiteSpace(_option?.BaseAddress) ? _httpClient?.BaseAddress?.OriginalString: _option?.BaseAddress;
+        private string BaseAddress => string.IsNullOrWhiteSpace(_option?.BaseAddress) ? _httpClient?.BaseAddress?.OriginalString : _option?.BaseAddress;
 
         public ExchangeHttpClient(HttpClient httpClient, ExchangeOption option)
         {
@@ -27,6 +27,34 @@ namespace Fanex.ThirdParty.ExchangeProduct.HttpClients
             if (string.IsNullOrWhiteSpace(httpClient?.BaseAddress?.OriginalString) && string.IsNullOrWhiteSpace(option?.BaseAddress))
             {
                 throw new ArgumentException("Not set up BaseAddress yet");
+            }
+        }
+
+        public async Task<bool> IsUnderMaintenance()
+        {
+            var param = new GetProfileParam()
+            {
+                CustId = new Random().Next(1, 100),
+                GroupMode = 0,
+            };
+            var url = BaseAddress + _option.UrlGetProfile;
+            var jsonString = JsonConvert.SerializeObject(param);
+            var content = new StringContent(jsonString, Encoding.UTF8, JsonContentType);
+
+            using (var response = await _httpClient.PostAsync(url, content).ConfigureAwait(false))
+            {
+                try
+                {
+                    response.EnsureSuccessStatusCode();
+                }
+                catch (Exception ex)
+                {
+                    ThrowExceptionWithExtraInfo(ex, url, jsonString);
+                }
+
+                var result = JsonConvert.DeserializeObject<ResponseResult<GetProfile>>(await response.Content.ReadAsStringAsync());
+
+                return result.ErrorCode == ExchangeErrorCode.UnderMaintenance || result.Result.status == CitiStatus.Under_Maintainence;
             }
         }
 
@@ -65,12 +93,13 @@ namespace Fanex.ThirdParty.ExchangeProduct.HttpClients
                 }
 
                 var result = JsonConvert.DeserializeObject<ResponseResult<TResult>>(await response.Content.ReadAsStringAsync());
-                if (result.ErrorCode != SuccessResultCode)
+
+                if (result.ErrorCode != ExchangeErrorCode.Success)
                 {
                     BuildMsgAndThrowException(result, url, jsonString);
                 }
                 return result;
-            }            
+            }
         }
 
         private void BuildMsgAndThrowException<TResult>(ResponseResult<TResult> result, string url, string param) where TResult : class
@@ -84,7 +113,7 @@ namespace Fanex.ThirdParty.ExchangeProduct.HttpClients
             throw new ExchangeException(stringBuilder.ToString());
         }
 
-        private void ThrowExceptionWithExtraInfo(Exception exception, string url, string param) 
+        private void ThrowExceptionWithExtraInfo(Exception exception, string url, string param)
         {
             var stringBuilder = new StringBuilder();
             stringBuilder.AppendLine("Exchange API response have error");
