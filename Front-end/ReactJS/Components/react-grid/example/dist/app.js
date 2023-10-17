@@ -242,7 +242,7 @@ var App = function (_Component) {
                         'Toggle Component'
                     )
                 ),
-                showComponent ? _react2.default.createElement(_index.Table, { minWidth: 600, onSort: this.onSort,
+                showComponent ? _react2.default.createElement(_index.VirtualScrollTable, { minWidth: 600, onSort: this.onSort,
                     autoWidth: true,
                     bodyHeight: 300,
                     header: header,
@@ -20921,6 +20921,8 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
@@ -20930,7 +20932,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var Cell = function Cell(props) {
     return _react2.default.createElement(
         'td',
-        props,
+        _extends({ style: { height: props.height ? props.height : 'auto' } }, props),
         props.children
     );
 };
@@ -21585,17 +21587,17 @@ var Table = function (_Component) {
         _this.bodyWrapper = null;
         _this.footerWrapper = null;
 
-        var headerContainerProps = { className: "header-content", isHeader: true };
+        var headerContainerProps = { className: "header-content", isHeader: true, isIncludeScrollWidth: props.isIncludeScrollWidth };
         _this.Header = (0, _tableSection2.default)(headerContainerProps);
 
         var bodyContainerProps = { className: "body-content", getRef: function getRef(element) {
                 return _this.bodyWrapper = element;
-            } };
+            }, isIncludeScrollWidth: props.isIncludeScrollWidth };
         _this.Body = (0, _tableSection2.default)(bodyContainerProps);
 
         var footerContainerProps = { className: "footer-content", getRef: function getRef(element) {
                 return _this.footerWrapper = element;
-            } };
+            }, isIncludeScrollWidth: props.isIncludeScrollWidth };
         _this.Footer = (0, _tableSection2.default)(footerContainerProps);
 
         var _this$props = _this.props,
@@ -21829,7 +21831,8 @@ Table.propTypes = {
     pageOption: _propTypes2.default.object,
     adjustedHeight: _propTypes2.default.number,
     containerPadding: _propTypes2.default.number,
-    shouldResetScrollPosition: _propTypes2.default.bool
+    shouldResetScrollPosition: _propTypes2.default.bool,
+    isIncludeScrollWidth: _propTypes2.default.bool
 };
 Table.defaultProps = {
     onSort: null,
@@ -21841,7 +21844,8 @@ Table.defaultProps = {
     bodyHeight: 0,
     autoHeight: true,
     containerPadding: 30,
-    shouldResetScrollPosition: true
+    shouldResetScrollPosition: true,
+    isIncludeScrollWidth: true
 };
 
 var _initialiseProps = function _initialiseProps() {
@@ -21865,6 +21869,483 @@ var _initialiseProps = function _initialiseProps() {
 };
 
 exports.default = Table;
+
+/***/ }),
+
+/***/ "./src/components/VirtualScrollTable.jsx":
+/*!***********************************************!*\
+  !*** ./src/components/VirtualScrollTable.jsx ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _RowLayout = __webpack_require__(/*! ./RowLayout */ "./src/components/RowLayout.jsx");
+
+var _RowLayout2 = _interopRequireDefault(_RowLayout);
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _tableVirtualScrollSection = __webpack_require__(/*! ./tableVirtualScrollSection */ "./src/components/tableVirtualScrollSection.js");
+
+var _tableVirtualScrollSection2 = _interopRequireDefault(_tableVirtualScrollSection);
+
+var _constants = __webpack_require__(/*! ../constants */ "./src/constants.js");
+
+var _Pager = __webpack_require__(/*! ./Pager */ "./src/components/Pager.jsx");
+
+var _Pager2 = _interopRequireDefault(_Pager);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var clientWidth = document.body.clientWidth;
+
+function scrollToTop(element, scrollDuration) {
+    var scrollStep = -element.scrollTop / (scrollDuration / 15);
+    requestAnimationFrame(function () {
+        var scrollInterval = null;
+        scrollInterval = setInterval(function () {
+            if (element.scrollTop != 0) {
+                element.scrollTop += scrollStep;
+            } else clearInterval(scrollInterval);
+        }, 15);
+    });
+}
+
+function debounce(func, wait) {
+    var timeout = void 0;
+    return function () {
+        var context = this,
+            args = arguments;
+
+        var later = function later() {
+            func.apply(context, args);
+        };
+
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait || _constants.DEFAULT_MILLISECOND_FOR_WAITING);
+    };
+}
+
+var VirtualScrollTable = function (_Component) {
+    _inherits(VirtualScrollTable, _Component);
+
+    function VirtualScrollTable(props) {
+        _classCallCheck(this, VirtualScrollTable);
+
+        var _this = _possibleConstructorReturn(this, (VirtualScrollTable.__proto__ || Object.getPrototypeOf(VirtualScrollTable)).call(this, props));
+
+        _initialiseProps.call(_this);
+
+        _this.bodyWrapper = null;
+        _this.footerWrapper = null;
+
+        var headerContainerProps = { className: "header-content", isHeader: true };
+        _this.Header = (0, _tableVirtualScrollSection2.default)(headerContainerProps);
+
+        var bodyContainerProps = { className: "body-content", isBody: true, getRef: function getRef(element) {
+                return _this.bodyWrapper = element;
+            } };
+        _this.Body = (0, _tableVirtualScrollSection2.default)(bodyContainerProps);
+
+        var footerContainerProps = { className: "footer-content", getRef: function getRef(element) {
+                return _this.footerWrapper = element;
+            } };
+        _this.Footer = (0, _tableVirtualScrollSection2.default)(footerContainerProps);
+
+        var _this$props = _this.props,
+            maxWidth = _this$props.maxWidth,
+            bodyHeight = _this$props.bodyHeight,
+            adjustedHeight = _this$props.adjustedHeight,
+            body = _this$props.body,
+            rowHeight = _this$props.rowHeight;
+
+        var maxWidthValue = maxWidth || clientWidth;
+
+        _this.diffWidth = clientWidth - maxWidthValue;
+        _this.adjustedHeight = adjustedHeight;
+
+        _this.debounceResizing = debounce(_this._handleResize, 100);
+
+        _this.debounceBodyScroll = debounce(_this._handleBodyScroll, 100);
+
+        _this.state = {
+            maxWidth: maxWidthValue,
+            contentHeight: bodyHeight,
+            columnsWidth: _this._getColumnsWidth(props.header),
+            spaceHeight: 0,
+            start: 0,
+            scrollTop: 0,
+            numberVisibleRows: Math.trunc(bodyHeight / _constants.DEFAULT_ROW_HEIGHT),
+            end: Math.trunc(bodyHeight / _constants.DEFAULT_ROW_HEIGHT),
+            isAllowedScroll: true,
+            isScrolling: false,
+            rowHeight: rowHeight || _constants.DEFAULT_ROW_HEIGHT,
+            tableHeight: (rowHeight || _constants.DEFAULT_ROW_HEIGHT) * body.length,
+            visibleRows: [],
+            isPrevRow: false
+        };
+        return _this;
+    }
+
+    _createClass(VirtualScrollTable, [{
+        key: '_getColumnsWidth',
+        value: function _getColumnsWidth(headerRows) {
+            var _this2 = this;
+
+            var headerIsArray = Array.isArray(headerRows);
+            if (headerIsArray && headerRows.length === 0) {
+                return null;
+            }
+
+            var columnsWidth = [];
+            var currentNextCellIndexByRow = {};
+
+            var getWidthByCells = function getWidthByCells(cells, currentRowIndex) {
+                for (var i = 0; i < cells.length; i++) {
+                    var cell = cells[i];
+                    if (!cell) {
+                        continue;
+                    }
+
+                    var cellProps = cell.props;
+                    var colspan = Number(cellProps.colSpan);
+
+                    if (colspan && colspan > 1) {
+                        var nextRowIndex = currentRowIndex + 1;
+                        if (currentNextCellIndexByRow[nextRowIndex] === undefined) {
+                            currentNextCellIndexByRow[nextRowIndex] = 0;
+                        }
+                        var fromNextCellIndex = currentNextCellIndexByRow[nextRowIndex];
+                        var toNextCellIndex = fromNextCellIndex + colspan - 1;
+                        var nextCells = headerRows[nextRowIndex].props.children;
+
+                        var nextColspanCells = _this2._getNextColspanCells(nextCells, fromNextCellIndex, toNextCellIndex);
+                        currentNextCellIndexByRow[nextRowIndex] += nextColspanCells.length;
+                        getWidthByCells(nextColspanCells, nextRowIndex);
+                    } else {
+                        var cellWidth = cellProps.colWidth ? cellProps.colWidth : _constants.DEFAULT_COLUMN_WIDTH;
+                        columnsWidth.push(cellWidth);
+                    }
+                }
+            };
+
+            var currentRowIndex = 0;
+            var cellList = headerIsArray ? headerRows[currentRowIndex].props.children : headerRows.props.children;
+            getWidthByCells(cellList, currentRowIndex);
+
+            return columnsWidth;
+        }
+    }, {
+        key: '_getNextColspanCells',
+        value: function _getNextColspanCells(cells, fromCellIndex, toCellIndex) {
+            var colspanCells = [];
+            for (var i = fromCellIndex; i <= toCellIndex; i++) {
+                var cell = cells[i];
+                var hasNext = i < cells.length;
+                if (!cell && hasNext) {
+                    toCellIndex += 1;
+                    continue;
+                }
+
+                if (cell.props.colSpan) {
+                    toCellIndex -= 1;
+                }
+
+                colspanCells.push(cell);
+            }
+
+            return colspanCells;
+        }
+    }, {
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            this._handleResize();
+            window.addEventListener('resize', this.debounceResizing);
+        }
+    }, {
+        key: 'componentWillUnmount',
+        value: function componentWillUnmount() {
+            window.removeEventListener('resize', this.debounceResizing);
+        }
+    }, {
+        key: 'componentDidUpdate',
+        value: function componentDidUpdate(prevProps, prevState) {
+            if (this.props.header != prevProps.header) {
+                this.setState({ columnsWidth: this._getColumnsWidth(this.props.header) });
+            }
+
+            if (this.props.shouldResetScrollPosition && prevProps.body != this.props.body) {
+                scrollToTop(this.bodyWrapper, 200);
+            }
+
+            if (this.props.body !== prevProps.body) {
+
+                scrollToTop(this.bodyWrapper, 200);
+                var bodyHeight = this._calculateBodyHeight();
+                var numberVisibleRows = Math.trunc(bodyHeight / this.state.rowHeight);
+                this.setState({
+                    contentHeight: bodyHeight,
+                    tableHeight: this.state.rowHeight * this.props.body.length,
+                    numberVisibleRows: numberVisibleRows,
+                    start: 0,
+                    end: numberVisibleRows
+                }, this._handleRenderVisibleRows);
+            }
+
+            if (this.state.isScrolling || this.state.spaceHeight + this.state.rowHeight !== this.state.scrollTop && !this.state.isAllowedScroll) {
+                this.setState({ isAllowedScroll: true, isScrolling: false });
+            }
+        }
+    }, {
+        key: '_handleRenderVisibleRows',
+        value: function _handleRenderVisibleRows() {
+            var start = this.state.start;
+            var currentIndex = this.state.isPrevRow ? start - 50 >= 0 ? start - 50 : 0 : 0;
+            var end = this.state.end + 50 >= this.props.body.length - 1 ? this.props.body.length - 1 : this.state.end + 50;
+
+            var result = [];
+            for (var i = currentIndex; i <= end; i++) {
+                result.push(this.props.body[i]);
+            }
+
+            console.log({
+                end: this.state.end
+            });
+
+            this.setState({ visibleRows: result });
+        }
+    }, {
+        key: '_calculateBodyHeight',
+        value: function _calculateBodyHeight() {
+            var windowHeight = window.innerHeight;
+            var footerHeight = this.footerWrapper ? this.footerWrapper.offsetHeight : 0;
+            var tableContentHeight = windowHeight - (this.bodyWrapper.offsetTop + footerHeight + 70) - this.adjustedHeight;
+
+            return tableContentHeight;
+        }
+    }, {
+        key: '_getUpdatedColumnLayout',
+        value: function _getUpdatedColumnLayout() {
+            var _this3 = this;
+
+            var _props = this.props,
+                width = _props.width,
+                autoWidth = _props.autoWidth,
+                containerPadding = _props.containerPadding;
+
+            var sumOfColumnWidth = autoWidth ? this.state.maxWidth : width;
+            sumOfColumnWidth = sumOfColumnWidth - containerPadding - _constants.SCROLLBAR_WIDTH;
+
+            var newColumnsWidth = this.columnWidthSum && this.state.columnsWidth.map(function (cellWidth) {
+                return sumOfColumnWidth / _this3.columnWidthSum * cellWidth;
+            });
+
+            return newColumnsWidth;
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _props2 = this.props,
+                width = _props2.width,
+                autoWidth = _props2.autoWidth,
+                minWidth = _props2.minWidth,
+                header = _props2.header,
+                body = _props2.body,
+                footer = _props2.footer,
+                isPaging = _props2.isPaging,
+                pageOption = _props2.pageOption,
+                onPaging = _props2.onPaging,
+                containerPadding = _props2.containerPadding;
+
+            var maxWidth = this.state.maxWidth - containerPadding;
+            var actualWidth = width - containerPadding;
+
+            var newColumnLayout = this.columnWidthSum && this.columnWidthSum !== actualWidth ? this._getUpdatedColumnLayout() : this.state.columnsWidth;
+
+            if (!newColumnLayout) {
+                return null;
+            }
+
+            var sectionProps = { width: actualWidth, autoWidth: autoWidth, minWidth: minWidth, maxWidth: maxWidth };
+            var headerSectionProps = { onSort: this.props.onSort, width: actualWidth, autoWidth: autoWidth, minWidth: minWidth, maxWidth: maxWidth };
+
+            var rowLayout = _react2.default.createElement(_RowLayout2.default, { columnLayout: newColumnLayout });
+
+            var Header = this.Header;
+            var Body = this.Body;
+            var Footer = this.Footer;
+
+            return _react2.default.createElement(
+                'div',
+                null,
+                _react2.default.createElement(
+                    'div',
+                    { className: 'table-container', style: { maxWidth: maxWidth } },
+                    _react2.default.createElement(
+                        Header,
+                        headerSectionProps,
+                        rowLayout,
+                        header
+                    ),
+                    body && _react2.default.createElement(
+                        Body,
+                        _extends({}, sectionProps, {
+                            maxHeight: this.state.contentHeight,
+                            spaceHeight: this.state.spaceHeight,
+                            onScroll: this._handleScroll,
+                            tableHeight: this.state.tableHeight
+                        }),
+                        rowLayout,
+                        this.state.visibleRows
+                    ),
+                    footer && _react2.default.createElement(
+                        Footer,
+                        sectionProps,
+                        rowLayout,
+                        footer
+                    )
+                ),
+                isPaging && pageOption && _react2.default.createElement(_Pager2.default, { pageOption: pageOption, onPaging: onPaging })
+            );
+        }
+    }, {
+        key: 'columnWidthSum',
+        get: function get() {
+            var columnsWidth = this.state.columnsWidth;
+            return !columnsWidth || !columnsWidth.length || columnsWidth.find(function (x) {
+                return typeof x !== "number";
+            }) ? null : columnsWidth.reduce(function (prev, current) {
+                return prev + current;
+            }, 0);
+        }
+    }]);
+
+    return VirtualScrollTable;
+}(_react.Component);
+
+VirtualScrollTable.propTypes = {
+    onSort: _propTypes2.default.func,
+    width: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.string]),
+    maxWidth: _propTypes2.default.number,
+    minWidth: _propTypes2.default.number,
+    autoWidth: _propTypes2.default.bool,
+    bodyHeight: _propTypes2.default.number,
+    autoHeight: _propTypes2.default.bool,
+    header: _propTypes2.default.oneOfType([_propTypes2.default.object, _propTypes2.default.arrayOf(_propTypes2.default.object)]).isRequired,
+    body: _propTypes2.default.arrayOf(_propTypes2.default.object),
+    footer: _propTypes2.default.arrayOf(_propTypes2.default.object),
+    isPaging: _propTypes2.default.bool,
+    onPaging: _propTypes2.default.func,
+    pageOption: _propTypes2.default.object,
+    adjustedHeight: _propTypes2.default.number,
+    containerPadding: _propTypes2.default.number,
+    shouldResetScrollPosition: _propTypes2.default.bool,
+    spaceHeight: _propTypes2.default.number
+};
+VirtualScrollTable.defaultProps = {
+    onSort: null,
+    width: clientWidth,
+    maxWidth: clientWidth,
+    autoWidth: true,
+    isPaging: false,
+    adjustedHeight: 0,
+    bodyHeight: 0,
+    autoHeight: true,
+    containerPadding: 30,
+    shouldResetScrollPosition: true,
+    spaceHeight: 0
+};
+
+var _initialiseProps = function _initialiseProps() {
+    var _this4 = this;
+
+    this._handleScroll = function () {
+        _this4.setState({ isScrolling: true });
+        if (_this4.state.isAllowedScroll) {
+            _this4.debounceBodyScroll();
+        }
+    };
+
+    this._handleBodyScroll = function () {
+        var scrollTop = _this4.bodyWrapper.scrollTop;
+        var a = (scrollTop / _this4.state.rowHeight - Math.trunc(scrollTop / _this4.state.rowHeight)) * _this4.state.rowHeight;
+        var spaceHeight = scrollTop > _this4.state.rowHeight ? scrollTop - a : 0;
+        var isPrevRow = false;
+        var prevRowHeight = _this4.state.rowHeight * 50;
+        if (spaceHeight > prevRowHeight) {
+            spaceHeight -= prevRowHeight;
+            isPrevRow = true;
+        } else {
+            spaceHeight = 0;
+        }
+
+        _this4.setState({
+            scrollTop: scrollTop,
+            isAllowedScroll: false,
+            isPrevRow: isPrevRow,
+            spaceHeight: spaceHeight
+        }, function () {
+            return _this4._handleExecuteScroll(scrollTop);
+        });
+    };
+
+    this._handleExecuteScroll = function (scrollTop) {
+        var currentIndex = Math.trunc(scrollTop / _this4.state.rowHeight);
+        currentIndex = currentIndex - _this4.state.numberVisibleRows >= _this4.props.body.length ? currentIndex - _this4.state.numberVisibleRows : currentIndex;
+        var end = currentIndex + _this4.state.numberVisibleRows >= _this4.props.body.length ? _this4.props.body.length - 1 : currentIndex + _this4.state.numberVisibleRows;
+
+        if (currentIndex !== _this4.state.start) {
+            _this4.setState({
+                start: currentIndex,
+                end: end
+            }, _this4._handleRenderVisibleRows);
+        }
+    };
+
+    this._handleResize = function (event) {
+        event && event.preventDefault();
+        if (_this4.bodyWrapper && _this4.props.autoHeight) {
+            var bodyHeight = _this4._calculateBodyHeight();
+            var numberVisibleRows = Math.trunc(bodyHeight / _this4.state.rowHeight);
+            if (_this4.state.contentHeight !== bodyHeight) {
+                scrollToTop(_this4.bodyWrapper, 200);
+                _this4.setState({
+                    contentHeight: bodyHeight, numberVisibleRows: numberVisibleRows, start: 0, end: numberVisibleRows
+                }, _this4._handleRenderVisibleRows);
+            }
+        }
+
+        var maxWidth = document.body.clientWidth - _this4.diffWidth;
+        if (_this4.state.maxWidth !== maxWidth) {
+            _this4.setState({ maxWidth: maxWidth });
+        }
+    };
+};
+
+exports.default = VirtualScrollTable;
 
 /***/ }),
 
@@ -22016,10 +22497,12 @@ var createTableSection = function createTableSection(extendedContainerProps, ext
         }, {
             key: 'tableStyle',
             get: function get() {
+                var isIncludeScrollWidth = extendedContainerProps.isIncludeScrollWidth;
                 var minWidth = this.props.minWidth;
 
                 var maxWidth = minWidth ? Math.max(this.containerWidth, minWidth) : this.containerWidth;
-                var tableWidth = maxWidth - _constants.SCROLLBAR_WIDTH;
+                var scrollBarWidth = isIncludeScrollWidth ? _constants.SCROLLBAR_WIDTH : 0;
+                var tableWidth = maxWidth - scrollBarWidth;
 
                 return {
                     width: tableWidth
@@ -22047,6 +22530,194 @@ exports.default = createTableSection;
 
 /***/ }),
 
+/***/ "./src/components/tableVirtualScrollSection.js":
+/*!*****************************************************!*\
+  !*** ./src/components/tableVirtualScrollSection.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _constants = __webpack_require__(/*! ../constants */ "./src/constants.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var createTableVirtualScrollSection = function createTableVirtualScrollSection(extendedContainerProps, extendedTableProps) {
+    var _class, _temp;
+
+    return _temp = _class = function (_Component) {
+        _inherits(TableSection, _Component);
+
+        function TableSection(props) {
+            _classCallCheck(this, TableSection);
+
+            var _this = _possibleConstructorReturn(this, (TableSection.__proto__ || Object.getPrototypeOf(TableSection)).call(this, props));
+
+            _this.onSort = function (sortBy, sortOrder) {
+                var onSort = _this.props.onSort;
+                _this.setState({
+                    sortBy: sortBy,
+                    sortOrder: sortOrder
+                }, function () {
+                    onSort && onSort(sortBy, sortOrder);
+                });
+            };
+
+            _this.state = {
+                sortBy: null,
+                sortOrder: null
+            };
+            return _this;
+        }
+
+        _createClass(TableSection, [{
+            key: '_renderHeaderChildren',
+            value: function _renderHeaderChildren() {
+                var _this2 = this;
+
+                var children = this.props.children;
+                var _state = this.state,
+                    sortBy = _state.sortBy,
+                    sortOrder = _state.sortOrder;
+
+                // register onSort event
+
+                return _react2.default.Children.map(children, function (child) {
+                    return _react2.default.cloneElement(child, { onSort: _this2.onSort, sortBy: sortBy, sortOrder: sortOrder });
+                });
+            }
+        }, {
+            key: 'render',
+            value: function render() {
+                var _props = this.props,
+                    tableHeight = _props.tableHeight,
+                    onScroll = _props.onScroll,
+                    spaceHeight = _props.spaceHeight,
+                    onSort = _props.onSort,
+                    tableClass = _props.tableClass,
+                    width = _props.width,
+                    autoWidth = _props.autoWidth,
+                    maxWidth = _props.maxWidth,
+                    minWidth = _props.minWidth,
+                    maxHeight = _props.maxHeight,
+                    rest = _objectWithoutProperties(_props, ['tableHeight', 'onScroll', 'spaceHeight', 'onSort', 'tableClass', 'width', 'autoWidth', 'maxWidth', 'minWidth', 'maxHeight']);
+
+                var isBody = extendedContainerProps.isBody,
+                    isHeader = extendedContainerProps.isHeader,
+                    getRef = extendedContainerProps.getRef,
+                    restContainerProps = _objectWithoutProperties(extendedContainerProps, ['isBody', 'isHeader', 'getRef']);
+
+                return _react2.default.createElement(
+                    'div',
+                    _extends({}, rest, { style: this.containerStyle, ref: getRef }, restContainerProps, { onScroll: onScroll }),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'table-wrapper', style: isBody ? { height: tableHeight } : null },
+                        _react2.default.createElement(
+                            'div',
+                            null,
+                            isBody ? _react2.default.createElement('div', { style: { height: spaceHeight } }) : null,
+                            _react2.default.createElement(
+                                'table',
+                                _extends({ style: this.tableStyle, className: tableClass }, extendedTableProps),
+                                isHeader ? _react2.default.createElement(
+                                    'thead',
+                                    null,
+                                    this._renderHeaderChildren()
+                                ) : _react2.default.createElement(
+                                    'tbody',
+                                    null,
+                                    this.props.children
+                                )
+                            )
+                        )
+                    )
+                );
+            }
+        }, {
+            key: 'containerWidth',
+            get: function get() {
+                var _props2 = this.props,
+                    autoWidth = _props2.autoWidth,
+                    maxWidth = _props2.maxWidth,
+                    width = _props2.width;
+
+                return autoWidth ? maxWidth : width;
+            }
+        }, {
+            key: 'containerStyle',
+            get: function get() {
+                var _props3 = this.props,
+                    minWidth = _props3.minWidth,
+                    maxHeight = _props3.maxHeight;
+
+
+                return _extends({}, this.props.style, {
+                    width: this.containerWidth,
+                    minWidth: minWidth,
+                    maxHeight: maxHeight
+                });
+            }
+        }, {
+            key: 'tableStyle',
+            get: function get() {
+                var minWidth = this.props.minWidth;
+
+                var maxWidth = minWidth ? Math.max(this.containerWidth, minWidth) : this.containerWidth;
+                var tableWidth = maxWidth - _constants.SCROLLBAR_WIDTH;
+
+                return {
+                    width: tableWidth
+                };
+            }
+        }]);
+
+        return TableSection;
+    }(_react.Component), _class.propTypes = {
+        onSort: _propTypes2.default.func,
+        tableClass: _propTypes2.default.string,
+        width: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.string]).isRequired,
+        maxWidth: _propTypes2.default.number.isRequired,
+        minWidth: _propTypes2.default.number,
+        autoWidth: _propTypes2.default.bool,
+        maxHeight: _propTypes2.default.number
+    }, _class.defaultProps = {
+        onSort: null,
+        tableClass: "table",
+        autoWidth: true
+    }, _temp;
+};
+
+exports.default = createTableVirtualScrollSection;
+
+/***/ }),
+
 /***/ "./src/constants.js":
 /*!**************************!*\
   !*** ./src/constants.js ***!
@@ -22064,6 +22735,7 @@ var SCROLLBAR_WIDTH = exports.SCROLLBAR_WIDTH = 19;
 var GUTTER = exports.GUTTER = 15;
 var DEFAULT_MILLISECOND_FOR_WAITING = exports.DEFAULT_MILLISECOND_FOR_WAITING = 500;
 var DEFAULT_COLUMN_WIDTH = exports.DEFAULT_COLUMN_WIDTH = 100;
+var DEFAULT_ROW_HEIGHT = exports.DEFAULT_ROW_HEIGHT = 29;
 
 /***/ }),
 
@@ -22080,11 +22752,15 @@ var DEFAULT_COLUMN_WIDTH = exports.DEFAULT_COLUMN_WIDTH = 100;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.Pager = exports.Cell = exports.HeaderCell = exports.Row = exports.HeaderRow = exports.Table = undefined;
+exports.Pager = exports.Cell = exports.HeaderCell = exports.Row = exports.HeaderRow = exports.VirtualScrollTable = exports.Table = undefined;
 
 var _Table = __webpack_require__(/*! ./components/Table */ "./src/components/Table.jsx");
 
 var _Table2 = _interopRequireDefault(_Table);
+
+var _VirtualScrollTable = __webpack_require__(/*! ./components/VirtualScrollTable */ "./src/components/VirtualScrollTable.jsx");
+
+var _VirtualScrollTable2 = _interopRequireDefault(_VirtualScrollTable);
 
 var _HeaderRow = __webpack_require__(/*! ./components/HeaderRow */ "./src/components/HeaderRow.jsx");
 
@@ -22109,6 +22785,7 @@ var _Pager2 = _interopRequireDefault(_Pager);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.Table = _Table2.default;
+exports.VirtualScrollTable = _VirtualScrollTable2.default;
 exports.HeaderRow = _HeaderRow2.default;
 exports.Row = _Row2.default;
 exports.HeaderCell = _HeaderCell2.default;
