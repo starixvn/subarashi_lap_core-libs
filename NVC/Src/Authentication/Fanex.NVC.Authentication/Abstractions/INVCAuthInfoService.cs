@@ -11,5 +11,6 @@ namespace Fanex.NVC.Authentication
         IEnumerable<NVCSettingAuthInfo> SettingList { get; }
         bool IsLicenseeUser { get; }
         IEnumerable<string> OfferedSubProductList { get; }
+        int Level { get; }
     }
 }
