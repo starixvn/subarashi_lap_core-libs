@@ -45,9 +45,11 @@ const createTableSection = (extendedContainerProps, extendedTableProps) => {
         }
 
         get tableStyle() {
+            const {isIncludeScrollWidth} = extendedContainerProps;
             const { minWidth } = this.props;
             const maxWidth = minWidth ? Math.max(this.containerWidth, minWidth) : this.containerWidth;
-            const tableWidth = maxWidth - SCROLLBAR_WIDTH;
+            const scrollBarWidth = isIncludeScrollWidth ? SCROLLBAR_WIDTH : 0
+            const tableWidth = maxWidth - scrollBarWidth;
 
             return {
                 width: tableWidth
