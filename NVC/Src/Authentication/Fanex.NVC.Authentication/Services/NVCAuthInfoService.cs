@@ -38,5 +38,6 @@ namespace Fanex.NVC.Authentication
         public bool IsAllowedCustomerComm => AuthInfo.LicenseeAuthInfo.IsAllowedCustomerComm;
         public bool IsLicenseeUser => AuthInfo.UserAuthInfo.IsLicenseeUser;
         public IEnumerable<string> OfferedSubProductList => AuthInfo.LicenseeAuthInfo.OfferedSubProductList;
+        public int Level => AuthInfo.UserAuthInfo.Level;
     }
 }
