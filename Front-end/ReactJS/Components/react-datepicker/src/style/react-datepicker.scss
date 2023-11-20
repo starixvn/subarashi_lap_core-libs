@@ -11,6 +11,7 @@ $cell-margin: 0 !default;
 $cell-size: (($calendar-width - $calendar-padding * 2) / 7) - ($cell-margin * 2) - 1 !default;
 $calendar-shadow: rgba($calendar-color, 0.25) 0 0 1em !default;
 $disable-background-button: #d2d8dc;
+$calendar-header-color: #4c6375;
 $indexNormal: 1;
 .daterange-container {
     position: relative;
@@ -127,7 +128,9 @@ $indexNormal: 1;
 
 .rdr-MonthAndYearSelect {
     height: 25px;
-    width: 65px;
+    width: 75px;
+    color: $calendar-header-color;
+    font-weight: 600;
 }
 
 .rdr-WeekDay {
@@ -141,6 +144,7 @@ $indexNormal: 1;
     margin-bottom: 1px;
     text-align: center;
     letter-spacing: initial;
+    color: $calendar-header-color;
 }
 
 .rdr-Day {
@@ -167,6 +171,16 @@ $indexNormal: 1;
     }
     &:hover:not(.is-selected) {
         background: $calendar-day-hover-background;
+    }
+    &.is-today {
+        background-color: #506374;
+        color: #fff;
+        border-radius: 50%;
+        opacity: 0.8 !important;
+    }
+    &.is-outside {
+        text-decoration: line-through;
+        pointer-events: none;
     }
 }
 

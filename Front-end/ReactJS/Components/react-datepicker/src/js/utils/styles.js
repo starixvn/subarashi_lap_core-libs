@@ -15,6 +15,8 @@ export const defaultClasses = {
     dayActive: 'is-selected',
     dayPassive: 'is-passive',
     dayInRange: 'is-inRange',
+    dayToday: 'is-today',
+    dayOutsideMinMax: 'is-outside',
     monthAndYearWrapper: 'rdr-MonthAndYear-innerWrapper',
     prevButton: 'rdr-MonthAndYear-button prev',
     nextButton: 'rdr-MonthAndYear-button next',
