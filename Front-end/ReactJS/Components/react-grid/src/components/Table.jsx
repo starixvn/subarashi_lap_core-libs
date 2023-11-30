@@ -42,13 +42,13 @@ class Table extends Component {
         this.bodyWrapper = null;
         this.footerWrapper = null;
 
-        const headerContainerProps = { className: "header-content", isHeader: true };
+        const headerContainerProps = { className: "header-content", isHeader: true, isIncludeScrollWidth: props.isIncludeScrollWidth  };
         this.Header = createTableSection(headerContainerProps);
 
-        const bodyContainerProps = { className: "body-content", getRef: element => this.bodyWrapper = element };
+        const bodyContainerProps = { className: "body-content", getRef: element => this.bodyWrapper = element, isIncludeScrollWidth: props.isIncludeScrollWidth  };
         this.Body = createTableSection(bodyContainerProps);
 
-        const footerContainerProps = { className: "footer-content", getRef: element => this.footerWrapper = element };
+        const footerContainerProps = { className: "footer-content", getRef: element => this.footerWrapper = element, isIncludeScrollWidth: props.isIncludeScrollWidth  };
         this.Footer = createTableSection(footerContainerProps);
 
         const { maxWidth, bodyHeight, adjustedHeight } = this.props;
@@ -82,7 +82,8 @@ class Table extends Component {
         pageOption: PropTypes.object,
         adjustedHeight: PropTypes.number,
         containerPadding: PropTypes.number,
-        shouldResetScrollPosition: PropTypes.bool
+        shouldResetScrollPosition: PropTypes.bool,
+        isIncludeScrollWidth: PropTypes.bool
     }
 
     static defaultProps = {
@@ -95,7 +96,8 @@ class Table extends Component {
         bodyHeight: 0,
         autoHeight: true,
         containerPadding: 30,
-        shouldResetScrollPosition: true
+        shouldResetScrollPosition: true,
+        isIncludeScrollWidth: true
     }
 
     _getColumnsWidth(headerRows) {

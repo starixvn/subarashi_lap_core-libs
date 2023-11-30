@@ -34,7 +34,7 @@
         "enzyme-adapter-react-15": "^1.0.6",
         "jest": "^23.5.0",
         "mini-css-extract-plugin": "^0.4.2",
-        "node-sass": "^4.9.3",
+        "node-sass": "^4.14.0",
         "optimize-css-assets-webpack-plugin": "^5.0.0",
         "react-test-renderer": "^16.4.2",
         "sass-loader": "^7.1.0",
@@ -46,6 +46,7 @@
         "webpack-merge": "^4.1.4"
     },
     "dependencies": {
+        "ci": "^2.3.0",
         "prop-types": "^15.6.2",
         "react": "^16.4.2",
         "react-dom": "^16.4.2"
