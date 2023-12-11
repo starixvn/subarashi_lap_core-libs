@@ -21584,26 +21584,29 @@ var Table = function (_Component) {
 
         _initialiseProps.call(_this);
 
+        var _this$props = _this.props,
+            maxWidth = _this$props.maxWidth,
+            bodyHeight = _this$props.bodyHeight,
+            adjustedHeight = _this$props.adjustedHeight,
+            isIncludeScrollWidth = _this$props.isIncludeScrollWidth,
+            header = _this$props.header;
+
+
         _this.bodyWrapper = null;
         _this.footerWrapper = null;
 
-        var headerContainerProps = { className: "header-content", isHeader: true, isIncludeScrollWidth: props.isIncludeScrollWidth };
+        var headerContainerProps = { className: "header-content", isHeader: true, isIncludeScrollWidth: isIncludeScrollWidth };
         _this.Header = (0, _tableSection2.default)(headerContainerProps);
 
         var bodyContainerProps = { className: "body-content", getRef: function getRef(element) {
                 return _this.bodyWrapper = element;
-            }, isIncludeScrollWidth: props.isIncludeScrollWidth };
+            }, isIncludeScrollWidth: isIncludeScrollWidth };
         _this.Body = (0, _tableSection2.default)(bodyContainerProps);
 
         var footerContainerProps = { className: "footer-content", getRef: function getRef(element) {
                 return _this.footerWrapper = element;
-            }, isIncludeScrollWidth: props.isIncludeScrollWidth };
+            }, isIncludeScrollWidth: isIncludeScrollWidth };
         _this.Footer = (0, _tableSection2.default)(footerContainerProps);
-
-        var _this$props = _this.props,
-            maxWidth = _this$props.maxWidth,
-            bodyHeight = _this$props.bodyHeight,
-            adjustedHeight = _this$props.adjustedHeight;
 
         var maxWidthValue = maxWidth || clientWidth;
 
@@ -21615,7 +21618,7 @@ var Table = function (_Component) {
         _this.state = {
             maxWidth: maxWidthValue,
             contentHeight: bodyHeight,
-            columnsWidth: _this._getColumnsWidth(props.header)
+            columnsWidth: _this._getColumnsWidth(header)
         };
         return _this;
     }
@@ -22446,7 +22449,8 @@ var createTableSection = function createTableSection(extendedContainerProps, ext
 
                 var isHeader = extendedContainerProps.isHeader,
                     getRef = extendedContainerProps.getRef,
-                    restContainerProps = _objectWithoutProperties(extendedContainerProps, ['isHeader', 'getRef']);
+                    isIncludeScrollWidth = extendedContainerProps.isIncludeScrollWidth,
+                    restContainerProps = _objectWithoutProperties(extendedContainerProps, ['isHeader', 'getRef', 'isIncludeScrollWidth']);
 
                 return _react2.default.createElement(
                     'div',
