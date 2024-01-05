@@ -5,7 +5,7 @@ React 16
 Supported languages: en-US (default), zh-TW, zh-CN, zh-Hans
 ## Install
 ```
-npm i @9softstudio/react-multiselect
+npm i @9legionlib/react-multiselect
 ```
 ## Screenshot
 
@@ -16,7 +16,7 @@ npm i @9softstudio/react-multiselect
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 
-import MultipleSelect from '@9softstudio/react-multiselect'
+import MultipleSelect from '@9legionlib/react-multiselect'
 
 export default class App extends Component {
     constructor(props) {

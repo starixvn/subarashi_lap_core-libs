@@ -13,16 +13,18 @@ export default class MultipleSelectLabel extends Component {
         language: PropTypes.string,
         selectedItems: PropTypes.arrayOf(PropTypes.object).isRequired,
         maxDisplayItemCount: PropTypes.number,
-        texts: PropTypes.object
+        texts: PropTypes.object,
+        disabled: PropTypes.bool
     }
 
     static defaultProps = {
         language: 'en-US',
-        maxDisplayItemCount: MAX_SELECTED_ITEM_FOR_DISPLAY
+        maxDisplayItemCount: MAX_SELECTED_ITEM_FOR_DISPLAY,
+        disabled: false
     }
 
     get selectedItemsString() {
-        const { selectedItems, maxDisplayItemCount } = this.props;
+        const { selectedItems, maxDisplayItemCount, disabled } = this.props;
         const selectedValues = selectedItems.map(item => item.value);
         const texts = this.props.texts;
 
@@ -44,7 +46,7 @@ export default class MultipleSelectLabel extends Component {
 
     render() {
         return (
-            <button type="button" className="multiple-select-default multiple-select-label"
+            <button type="button" className="multiple-select-default multiple-select-label" disabled={this.props.disabled}
                 onClick={this.props.onToggle}>
                 <span className="text-display" title={this.selectedItemsString}>{this.selectedItemsString}</span>
                 <b className="caret"></b>
