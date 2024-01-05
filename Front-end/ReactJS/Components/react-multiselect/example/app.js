@@ -214,6 +214,7 @@ export default class App extends Component {
                         texts={{ SelectOptions: "Please select", All: "All", SelectedItemCount: "# selected" }}
                         isAllTextShown={true}
                         hasSearchBox={true}
+                        disabled={true}
                         onChange={this.handleChangeMultiSelect} />
                 </div>
 
@@ -246,7 +247,8 @@ export default class App extends Component {
                                     isAllTextShown={false}
                                     hasSearchBox={false}
                                     treeViewOption={treeViewOption11}
-                                    onChange={this.handleChangeTreeView} />
+                                    onChange={this.handleChangeTreeView}
+                                    disabled={true} />
                         </div>
                     </div>
                     <div style={{ minWidth: "400px", display: "inline-block" }}>
