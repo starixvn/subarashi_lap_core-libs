@@ -1,2 +1,3 @@
-# React-components
-# Add simple react tabs
+# Node v20
+# Webpack 5
+# React v18

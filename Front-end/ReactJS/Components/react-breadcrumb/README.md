@@ -3,11 +3,11 @@ react-breadcrumb
 ![react-breadcrumb](https://raw.githubusercontent.com/9softstudio/React-components/master/react-breadcrumb/screenshots/react-breadcrumb.jpg)
 ## Install
 ```
-npm i @9softstudio/react-breadcrumb
+npm i @legion-lib/react-breadcrumb
 ```
 ## Usage
 ```javascript
-import { Breadcrumb } from '@9softstudio/react-breadcrumb'
+import { Breadcrumb } from '@legion-lib/react-breadcrumb'
 
 export default class App extends Component {
     constructor(props) {

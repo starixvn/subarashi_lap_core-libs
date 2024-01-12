@@ -40,7 +40,7 @@ export default class Breadcrumb extends Component {
                 break;
             }
         }
-        
+
         return breadcrumbItems;
     }
 
@@ -53,7 +53,7 @@ export default class Breadcrumb extends Component {
         return (
             <div className='breadcrumb'>
                 {items}
-            </div>    
+            </div>
         );
     }
 }

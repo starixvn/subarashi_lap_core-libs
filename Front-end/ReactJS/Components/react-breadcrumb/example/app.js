@@ -13,7 +13,7 @@ export default class App extends Component {
 
     render() {
         const items = [];
-        items.push({ label: "Level 11", value: 1, });
+        items.push({ label: "Level 1", value: 1, });
         items.push({ label: "Level 2", value: 2, });
         items.push({ label: "Level 3", value: 3, });
 
