@@ -47,9 +47,9 @@ module.exports = env => {
     const clientBundleConfig = merge(sharedConfig(), {
         entry: {
             'dist/index': './src/js/index.js',
-            'dist/style': './src/style/react-datepicker.scss',
+            'dist/style': './src/style/index.scss',
             'example/dist/index': './src/js/index.js',
-            'example/dist/style': './src/style/react-datepicker.scss',
+            'example/dist/style': './src/style/index.scss',
             'example/dist/app': './example/app.js',
         },
         module: {
