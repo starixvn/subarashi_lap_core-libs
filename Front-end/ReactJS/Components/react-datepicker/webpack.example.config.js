@@ -1,57 +1,65 @@
 const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-
-const environment = {
-    development: 'development',
-    production: 'production'
-}
-
-module.exports = env => {
-    env = environment[env] || environment.development;
-
-    const webpackConfig = {
-        context: path.resolve(__dirname, "./"),
-        mode: env,
-        stats: { modules: false },
-        resolve: { extensions: [".js", ".jsx"] },
-        entry: {
-            'app': './example/app.js',
-            'style': './src/style/react-datepicker.scss'
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
+module.exports = {
+    mode: 'production',
+    entry: {
+        'index': './example/app.js',
+        'style': './example/style.scss'
+    },
+    output: {
+        filename: '[name].js',
+        path: path.resolve(__dirname, './example/dist/')
+    },
+    resolve: {
+        extensions: [".js", ".jsx"],
+    },
+    module: {
+        rules: [{
+            test: /\.(js|jsx)$/,
+            use: 'babel-loader',
+            exclude: /node_modules/,
         },
-        output: {
-            path: path.resolve(__dirname, './example/dist'),
-            filename: "[name].js",
-            publicPath: '/example/dist/'
-        },
-        module: {
-            rules: [{
-                    test: /\.(js|jsx)$/,
-                    use: "babel-loader",
-                    exclude: /(node_modules|bower_components)/
-                },
-                {
-                    test: /\.s?[ac]ss$/,
-                    use: [
-                        "style-loader",
-                        MiniCssExtractPlugin.loader,
-                        "css-loader",
-                        "sass-loader"
-                    ]
-                }
+        {
+            test: /\.(sc|c)ss$/,
+            use: [
+                MiniCssExtractPlugin.loader,
+                'css-loader',
+                'sass-loader',
             ]
-        },
-        plugins: [
-            new MiniCssExtractPlugin({
-                filename: "[name].css"
-            }),
-        ],
-        devtool: "source-map",
-        devServer: {
-            port: 3000,
-            hot: true,
-            watchContentBase: true
         }
-    };
-
-    return webpackConfig;
-};
+        ]
+    },
+    plugins: [
+        new CleanWebpackPlugin(),
+        new MiniCssExtractPlugin({ filename: "[name].css", chunkFilename: '[id].css' })
+    ],
+    devServer: {
+        static: path.join(__dirname, "./example"),
+        compress: true,
+        port: 9001,
+        devMiddleware: {
+            writeToDisk: true,
+        },
+        client: {
+            overlay: {
+              errors: true,
+              warnings: false,
+              runtimeErrors: true,
+            },
+        }
+    },
+    optimization: {
+        minimize: true,
+        minimizer: [new TerserPlugin({
+            extractComments: false,
+            terserOptions: {
+                format: {
+                    comments: false,
+                },
+            }
+        })],
+    },
+    devtool: "source-map"
+}

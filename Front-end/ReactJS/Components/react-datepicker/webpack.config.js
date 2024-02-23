@@ -1,89 +1,76 @@
 const path = require("path");
-const webpack = require("webpack");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
-const merge = require("webpack-merge");
-const CleanWebpackPlugin = require("clean-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
 
-const environment = {
-    development: 'development',
-    production: 'production'
-}
+module.exports = (env) => {
+  const isDevBuild = process.env.NODE_ENV === "development";
 
-let pathsToClean = ["dist/*.*"];
-
-let cleanOptions = {
-    root: path.resolve(__dirname, "."),
-    verbose: true,
-    dry: false
-};
-
-module.exports = env => {
-    env = environment[env] || environment.development;
-    const isDevBuild = !(env === environment.production);
-
-    const sharedConfig = () => ({
-        context: path.resolve(__dirname, "./"),
-        mode: env,
-        stats: { modules: false },
-        resolve: { extensions: [".js", ".jsx"] },
-        output: {
-            path: path.resolve(__dirname, "./"),
-            filename: "[name].js",
-            publicPath: '/dist/',
-            libraryTarget: 'umd',
-            library: 'ReactDatePicker'
+  const clientBundleConfig = {
+    mode: process.env.NODE_ENV,
+    entry: {
+      index: "./src/js/index.js",
+      style: "./src/style/index.scss",
+    },
+    output: {
+      path: path.resolve(__dirname, "dist"),
+      filename: "[name].js",
+      libraryTarget: "umd",
+      library: "ReactDatePicker",
+    },
+    resolve: { extensions: [".js", ".jsx"] },
+    module: {
+      rules: [
+        {
+          test: /\.(js|jsx)$/,
+          use: "babel-loader",
+          exclude: /node_modules/,
         },
-        module: {
-            rules: [{
-                test: /\.(js|jsx)$/,
-                use: "babel-loader",
-                exclude: /(node_modules|bower_components)/
-            }]
-        }
-    });
-
-    // Configuration for client-side bundle suitable for running in browsers
-    const clientBundleConfig = merge(sharedConfig(), {
-        entry: {
-            'dist/index': './src/js/index.js',
-            'dist/style': './src/style/index.scss',
-            'example/dist/index': './src/js/index.js',
-            'example/dist/style': './src/style/index.scss',
-            'example/dist/app': './example/app.js',
+        {
+          test: /\.(sc|c)ss$/,
+          use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
         },
-        module: {
-            rules: [{
-                test: /\.s?[ac]ss$/,
-                use: [
-                    "style-loader",
-                    MiniCssExtractPlugin.loader,
-                    "css-loader",
-                    "sass-loader"
-                ]
-            }]
-        },
-        plugins: [
-            new MiniCssExtractPlugin({
-                filename: "[name].css"
-            })
-        ].concat(isDevBuild ? [] : [new OptimizeCSSAssetsPlugin(), new CleanWebpackPlugin(pathsToClean, cleanOptions), ]),
-        devtool: isDevBuild ? "source-map" : "(none)",
-        externals: isDevBuild ? {} : {
-            react: {
-                root: 'React',
-                commonjs2: 'react',
-                commonjs: 'react',
-                amd: 'react'
+      ],
+    },
+    plugins: [
+      new CleanWebpackPlugin(),
+      new MiniCssExtractPlugin({
+        filename: "[name].css",
+        chunkFilename: "[id].css",
+      }),
+    ],
+    optimization: {
+      minimize: true,
+      minimizer: [
+        new TerserPlugin({
+          terserOptions: {
+            compress: {
+              drop_console: true,
             },
-            moment: {
-                root: 'moment',
-                commonjs2: 'moment',
-                commonjs: 'moment',
-                amd: 'moment'
-            }
-        }
-    });
+          },
+          extractComments: false,
+        }),
+      ],
+    },
+    devtool: isDevBuild ? "source-map" : undefined,
+    externals: isDevBuild
+      ? {}
+      : {
+          react: {
+            root: "React",
+            commonjs2: "react",
+            commonjs: "react",
+            amd: "react",
+          },
+          moment: {
+            root: "moment",
+            commonjs2: "moment",
+            commonjs: "moment",
+            amd: "moment",
+          },
+        },
+    watch: isDevBuild,
+  };
 
-    return clientBundleConfig;
+  return clientBundleConfig;
 };
