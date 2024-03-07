@@ -42,6 +42,7 @@ export default class TreeViewSelect extends Component {
         isAllTextShown: PropTypes.bool,
         texts: PropTypes.object,
         isValid: PropTypes.bool,
+        disabled: PropTypes.bool,
         treeViewOption: PropTypes.shape({
             childrenField: PropTypes.string,
             keyField: PropTypes.string,
@@ -60,7 +61,8 @@ export default class TreeViewSelect extends Component {
         statusField: STATUS_NAME,
         hasAllOption: true,
         hasSearchBox: false,
-        isValid: true
+        isValid: true,
+        disabled: false
     }
 
     componentDidMount() {
@@ -278,7 +280,7 @@ export default class TreeViewSelect extends Component {
     }
 
     render() {
-        const { maxDisplayItemCount, treeViewOption } = this.props;
+        const { maxDisplayItemCount, treeViewOption, disabled } = this.props;
         const actualTreeViewOption = (treeViewOption && { ...defaultTreeViewOption, ...treeViewOption }) || { ...defaultTreeViewOption };
         const className = "multiple-select-container" + (this.props.isValid ? "" : " invalid");
         
@@ -292,7 +294,8 @@ export default class TreeViewSelect extends Component {
                         onToggle={this.onToggle}
                         texts={this.props.texts}
                         isAllTextShown={this.props.isAllTextShown}
-                        maxDisplayItemCount={maxDisplayItemCount} />
+                        maxDisplayItemCount={maxDisplayItemCount}
+                        disabled={disabled} />
                 }
                 <div className="multiple-select-default multiple-select-options-container"
                     style={{ display: this.state.showOptionList ? "block" : "none" }}>

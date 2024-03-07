@@ -50,7 +50,8 @@ export default class MultipleSelect extends Component {
         hasSearchBox: PropTypes.bool,
         isAllTextShown: PropTypes.bool,
         texts: PropTypes.object,
-        isValid: PropTypes.bool
+        isValid: PropTypes.bool,
+        disabled: PropTypes.bool
     }
 
     static defaultProps = {
@@ -60,7 +61,8 @@ export default class MultipleSelect extends Component {
         statusField: STATUS_NAME,
         hasAllOption: true,
         hasSearchBox: false,
-        isValid: true
+        isValid: true,
+        disabled: false
     }
 
     componentDidMount() {
@@ -212,7 +214,7 @@ export default class MultipleSelect extends Component {
     }
 
     render() {
-        const { maxDisplayItemCount } = this.props;
+        const { maxDisplayItemCount, disabled } = this.props;
         const className = "multiple-select-container" + (this.props.isValid ? "" : " invalid");
 
         return (
@@ -226,7 +228,8 @@ export default class MultipleSelect extends Component {
                     texts={this.props.texts}
                     isAllTextShown={this.props.isAllTextShown}
                     maxDisplayItemCount={maxDisplayItemCount}
-                    isValid={this.props.isValid} />
+                    isValid={this.props.isValid}
+                    disabled={disabled} />
                 }
                 <div className="multiple-select-default multiple-select-options-container"
                 style={{ display: this.state.showOptionList ? "block" : "none" }}>
