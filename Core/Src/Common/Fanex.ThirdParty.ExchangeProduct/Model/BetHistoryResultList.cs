@@ -31,7 +31,7 @@ namespace Fanex.ThirdParty.ExchangeProduct.Model
 
         public string matchType { get; set; }
 
-        public int betId { get; set; }
+        public long betId { get; set; }
 
         public DateTime? betPlaced { get; set; }
 

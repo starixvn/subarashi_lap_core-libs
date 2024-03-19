@@ -4,7 +4,7 @@ namespace Fanex.ThirdParty.ExchangeProduct.Model
 {
     public class ReSettleSummaryTransactionData
     {
-        public int betId { get; set; }
+        public long betId { get; set; }
 
         public string selectionName { get; set; }
 

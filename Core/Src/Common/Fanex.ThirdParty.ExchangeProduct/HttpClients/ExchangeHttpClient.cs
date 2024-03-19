@@ -79,7 +79,7 @@ namespace Fanex.ThirdParty.ExchangeProduct.HttpClients
         public async Task<ResponseResult<TResult>> PostAsync<TResult, TParam>(string url, TParam param)
             where TResult : class
         {
-            var jsonString = JsonConvert.SerializeObject(param);
+            var jsonString = JsonConvert.SerializeObject(param, new JsonSerializerSettings { DateFormatString = "yyyy-MM-dd HH:mm:ss"});
             var content = new StringContent(jsonString, Encoding.UTF8, JsonContentType);
             using (var response = await _httpClient.PostAsync(url, content).ConfigureAwait(false))
             {
