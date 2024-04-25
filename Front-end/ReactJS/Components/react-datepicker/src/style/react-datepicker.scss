@@ -158,11 +158,13 @@ $calendar-header-color: #4c6375;
     &:hover:not(.is-selected) {
         background: $calendar-day-hover-background;
     }
-    &.is-today {
-        background-color: #506374;
-        color: #fff;
-        border-radius: 50%;
-        opacity: 0.8 !important;
+    &:not(.is-selected) {
+        &.is-today {
+            background: #506374;
+            color: #fff;
+            border-radius: 50%;
+            opacity: 0.8 !important;
+        }
     }
     &.is-outside {
         text-decoration: line-through;
