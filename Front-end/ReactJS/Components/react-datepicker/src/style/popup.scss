@@ -1,0 +1,41 @@
+.popup-container {
+    &.show {
+        .popup-block-body, .flat-popup {
+            display: block;
+        }
+    }
+
+    &.hide {
+        .popup-block-body, .flat-popup {
+            display: none;
+        }
+    }
+
+    .popup-block-body {
+        border: none;
+        background: rgba(0, 0, 0, 0.7) no-repeat;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 100;
+    }
+
+    .flat-popup {
+        background: $white;
+        position: fixed;
+        z-index: 101;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+
+        .popup-content {
+            overflow-y: auto;
+            height: calc(100% - 38px);
+            padding: 0 0 20px 0;
+        }
+    }
+}

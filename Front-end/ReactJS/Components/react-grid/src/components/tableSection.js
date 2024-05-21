@@ -77,7 +77,7 @@ const createTableSection = (extendedContainerProps, extendedTableProps) => {
 
         render() {
             const { onSort, tableClass, width, autoWidth, maxWidth, minWidth, maxHeight, ...rest } = this.props;
-            const { isHeader, getRef, ...restContainerProps } = extendedContainerProps;
+            const { isHeader, getRef, isIncludeScrollWidth, ...restContainerProps } = extendedContainerProps;
 
             return (
                 <div {...rest} style={this.containerStyle} ref={getRef} {...restContainerProps}>

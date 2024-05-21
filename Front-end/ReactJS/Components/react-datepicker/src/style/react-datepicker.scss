@@ -1,17 +1,4 @@
-$calendar-color: #000000 !default;
-$calendar-background: #ffffff !default;
-$calendar-month-button-background: #bdc3c7 !default;
-$calendar-month-button-icon-color: rgb(52, 73, 94) !default;
-$calendar-day-selected-background: #4eb85e !default;
-$calendar-day-hover-background: rgba(78, 184, 94, 0.4) !default;
-$calendar-day-in-range-background: rgba(78, 184, 94, 0.2) !default;
-$calendar-width: 280px !default;
-$calendar-padding: 10px !default;
-$cell-margin: 0 !default;
-$cell-size: (($calendar-width - $calendar-padding * 2) / 7) - ($cell-margin * 2) - 1 !default;
-$calendar-shadow: rgba($calendar-color, 0.25) 0 0 1em !default;
-$disable-background-button: #d2d8dc;
-$indexNormal: 1;
+$calendar-header-color: #4c6375;
 .daterange-container {
     position: relative;
     .icon-calendar {
@@ -127,7 +114,9 @@ $indexNormal: 1;
 
 .rdr-MonthAndYearSelect {
     height: 25px;
-    width: 65px;
+    width: 75px;
+    color: $calendar-header-color;
+    font-weight: 600;
 }
 
 .rdr-WeekDay {
@@ -141,6 +130,7 @@ $indexNormal: 1;
     margin-bottom: 1px;
     text-align: center;
     letter-spacing: initial;
+    color: $calendar-header-color;
 }
 
 .rdr-Day {
@@ -167,6 +157,18 @@ $indexNormal: 1;
     }
     &:hover:not(.is-selected) {
         background: $calendar-day-hover-background;
+    }
+    &:not(.is-selected) {
+        &.is-today {
+            background: #506374;
+            color: #fff;
+            border-radius: 50%;
+            opacity: 0.8 !important;
+        }
+    }
+    &.is-outside {
+        text-decoration: line-through;
+        pointer-events: none;
     }
 }
 
@@ -223,3 +225,118 @@ $indexNormal: 1;
 .range-button-group {
     margin-top: 5px;
 }
+
+.rdr-mobile-popup{
+    &.popup-container .flat-popup{
+        width: auto;
+        height: auto;
+        max-width: 570px;
+        max-height: 100%;
+
+        .popup-content{
+            height: 100%;
+        }
+    }
+
+    .rdr-DateRange{
+        position: initial;
+        display: flex;
+        box-shadow: none;
+    }
+    .mobile-calender{
+        display: flex;
+        flex-direction: column;
+        max-width: 376px;
+        width: 66%;
+
+        .rdr-Calendar{
+            width: 100%;
+            padding-top: 12px;
+            padding-bottom: 12px;
+            &:not(:first-child){
+                border-top: 1px solid var(--line-table-line-table, #BDBDBD);
+            }
+        }
+
+        .rdr-WeekDays{
+            display: flex;
+            
+            .rdr-WeekDay{
+                flex: auto;
+            }
+        }
+        .rdr-Days{
+            display: flex;
+            flex-wrap: wrap;
+            >span{               
+                align-items: center;
+                justify-content: center;
+                display: flex;
+                flex: auto;
+                width: calc(100% / 7)
+            }
+            .rdr-Day{
+                width: 100%;
+                position: relative;
+                height: initial;
+                span{
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    bottom: 0;
+                    right: 0;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 13px;
+                }
+            }
+            
+        }
+        .rdr-MonthAndYear-innerWrapper{
+            display: flex;
+            >*{
+                flex: auto;
+            }
+            >span{
+                display: flex;
+                width: 100%;
+                justify-content: center;
+                .rdr-MonthAndYearSelect{
+                    width: auto;
+                }
+            }
+        }
+    }
+    .rdr-PredefinedRanges{
+        flex: auto;
+        border-right: 1px solid var(--line-table-line-table, #BDBDBD);
+        margin: 0;
+        >a{
+            padding: 8px 12px;
+            margin-top: 12px;
+            text-wrap: wrap;
+        }
+    }
+    .calender-button{
+        padding: 8px;
+        border-top: 1px solid var(--line-table-line-table, #BDBDBD);
+    }
+    .rdr-Button{
+        height: 32px;
+    }
+}
+
+@media (max-width: 375px){
+    .rdr-mobile-popup{
+        .rdr-PredefinedRanges{
+            >a{
+                padding: 4px 8px;
+            }
+        }
+        .rdr-Button{
+            height: 28px;
+        }
+    }
+}
+

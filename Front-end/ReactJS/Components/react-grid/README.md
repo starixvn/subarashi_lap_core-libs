@@ -2,7 +2,7 @@ React Grid (old name: React Fixed Table Header)
 =========================
 ### Install
 ```
-npm i @9softstudio/react-grid
+npm i @legion-lib/react-grid
 ```
 ## Usage
 

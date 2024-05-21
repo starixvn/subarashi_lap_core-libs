@@ -347,7 +347,7 @@ class Calendar extends Component {
       const isStartEdge = range && checkStartEdge(dayMoment, range);
       const isEndEdge = range && checkEndEdge(dayMoment, range);
       const isEdge = isStartEdge || isEndEdge;
-      const isToday = today.isSame(dayMoment);
+      const isToday = today.isSame(dayMoment, 'day');
       const isSunday = dayMoment.day() === 0;
       const isSpecialDay = specialDays && specialDays.some((specialDay) => {
         return dayMoment.endOf('day').isSame(specialDay.date.endOf('day'));
@@ -368,6 +368,7 @@ class Calendar extends Component {
           isToday={isToday}
           key={index}
           isPassive={isPassive || isOutsideMinMax}
+          isOutsideMinMax={isOutsideMinMax}
           onlyClasses={onlyClasses}
           classNames={classes}
         />
