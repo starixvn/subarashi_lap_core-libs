@@ -1,0 +1,40 @@
+{
+  "name": "@legion-lib/react-simple-month-picker",
+  "version": "1.0.0",
+  "description": "React Simple Month Picker Component",
+  "main": "dist/index.js",
+  "directories": {
+    "example": "example"
+  },
+  "scripts": {
+    "start": "npx webpack --config webpack.example.config.js --mode=development --devtool=inline-source-map --watch",
+    "build:example": "npx webpack --config webpack.example.config.js --mode=production",
+    "build:pro": "npx webpack --config webpack.config.prod.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "legion",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.24.7",
+    "@babel/preset-env": "^7.24.7",
+    "@babel/preset-react": "^7.24.7",
+    "babel-loader": "^9.1.3",
+    "clean-webpack-plugin": "^4.0.0",
+    "css-loader": "^7.1.2",
+    "mini-css-extract-plugin": "^2.9.0",
+    "sass": "^1.77.6",
+    "sass-loader": "^14.2.1",
+    "terser-webpack-plugin": "^5.3.10",
+    "webpack": "^5.92.1",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.0.4",
+    "webpack-merge": "^5.10.0"
+  },
+  "dependencies": {
+    "classnames": "^2.5.1",
+    "moment": "^2.30.1",
+    "prop-types": "^15.8.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}

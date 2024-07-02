@@ -1,0 +1,15 @@
+
+@import '../src/styles/index.scss';
+
+.container {
+    padding: 20px;
+    padding-right: 40px;
+    border-style: solid;
+    width: min-content;
+
+    .month-picker-wrap {
+        flex-wrap: nowrap;
+        width: 500px;
+    }
+}
+
