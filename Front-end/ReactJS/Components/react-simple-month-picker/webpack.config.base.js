@@ -15,7 +15,7 @@ module.exports = {
         path: path.resolve(__dirname, 'dist'),
     },
     resolve: {
-        extensions: [".js", ".jsx"],
+        extensions: [".js", ".jsx", '.ts', '.tsx'],
     },
     optimization: {
         minimizer: [
@@ -46,6 +46,11 @@ module.exports = {
                     'css-loader', 
                     'sass-loader',
                 ],
+            },
+            {
+                test: /\.tsx?$/,
+                use: 'ts-loader',
+                exclude: /node_modules/
             },
         ],
     },

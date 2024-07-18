@@ -1,8 +1,9 @@
 {
   "name": "@legion-lib/react-simple-month-picker",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "React Simple Month Picker Component",
   "main": "dist/index.js",
+  "types": "types/index.d.ts",
   "directories": {
     "example": "example"
   },
@@ -15,9 +16,12 @@
   "author": "legion",
   "license": "MIT",
   "devDependencies": {
-    "@babel/core": "^7.24.7",
-    "@babel/preset-env": "^7.24.7",
+    "@babel/core": "^7.24.9",
+    "@babel/preset-env": "^7.24.8",
     "@babel/preset-react": "^7.24.7",
+    "@babel/preset-typescript": "^7.24.7",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
     "babel-loader": "^9.1.3",
     "clean-webpack-plugin": "^4.0.0",
     "css-loader": "^7.1.2",
@@ -25,10 +29,12 @@
     "sass": "^1.77.6",
     "sass-loader": "^14.2.1",
     "terser-webpack-plugin": "^5.3.10",
-    "webpack": "^5.92.1",
+    "typescript": "^5.5.3",
+    "webpack": "^5.93.0",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^5.0.4",
-    "webpack-merge": "^5.10.0"
+    "webpack-merge": "^5.10.0",
+    "webpack-node-externals": "^3.0.0"
   },
   "dependencies": {
     "classnames": "^2.5.1",
