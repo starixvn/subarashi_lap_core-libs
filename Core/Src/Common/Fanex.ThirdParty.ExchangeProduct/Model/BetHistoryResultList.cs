@@ -47,6 +47,10 @@ namespace Fanex.ThirdParty.ExchangeProduct.Model
 
         public int? fancyBetRuns { get; set; }
 
+        public int fancyBetExtendedRuns { get; set; }
+
+        public int fancyBetMarketType { get; set; }
+
         public string extension1 { get; set; }
 
         public List<SettleBetHistoryTransactionData> transactionData { get; set; }
@@ -68,6 +72,8 @@ namespace Fanex.ThirdParty.ExchangeProduct.Model
         public DateTime? matchSettledDate { get; set; }
 
         public DateTime? marketSettledDate { get; set; }
+
+        public decimal matchAmount { get;set; }
 
         public decimal unMatchAmount { get; set; }
 

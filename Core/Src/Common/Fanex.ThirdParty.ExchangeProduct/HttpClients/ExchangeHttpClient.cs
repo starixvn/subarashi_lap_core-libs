@@ -76,6 +76,9 @@ namespace Fanex.ThirdParty.ExchangeProduct.HttpClients
         public Task<ResponseResult<CommissionInfo>> UpdateCommissionAsync(UpdateCommissionParam param)
             => PostAsync<CommissionInfo, UpdateCommissionParam>(BaseAddress + _option.UrlUpdateCommission, param);
 
+        public Task<ResponseResult<CurrentBet>> QueryCurrentBetsByLastTime(QueryCurrentBetsByLastTimeParam param)
+            => PostAsync<CurrentBet, QueryCurrentBetsByLastTimeParam>(BaseAddress + _option.UrlQueryCurrentBetsByLastTime, param);
+
         public async Task<ResponseResult<TResult>> PostAsync<TResult, TParam>(string url, TParam param)
             where TResult : class
         {
@@ -121,5 +124,7 @@ namespace Fanex.ThirdParty.ExchangeProduct.HttpClients
             stringBuilder.AppendLine($"Param: {param}");
             throw new ExchangeException(stringBuilder.ToString(), exception);
         }
+
+
     }
 }

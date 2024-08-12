@@ -17,5 +17,7 @@ namespace Fanex.ThirdParty.ExchangeProduct
         public string UrlQuerySummaryTransaction { get; set; } = UrlEndPoint.QuerySummaryTransaction;
 
         public string UrlQueryBetHistoryForAllStatus { get; set; } = UrlEndPoint.QueryBetHistoryForAllStatus;
+
+        public string UrlQueryCurrentBetsByLastTime { get; set; } = UrlEndPoint.QueryCurrentBetsByLastUpdateDate;
     }
 }

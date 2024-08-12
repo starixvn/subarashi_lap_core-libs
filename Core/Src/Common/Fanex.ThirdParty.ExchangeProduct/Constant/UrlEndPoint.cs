@@ -10,5 +10,7 @@ namespace Fanex.ThirdParty.ExchangeProduct.Constant
         public const string QuerySettleBetHistory = "/api/ExchangeInternal/QuerySettleBetHistory";
         public const string QueryReSettleSummaryTransaction = "/api/ExchangeInternal/QueryReSettleSummaryTransaction";
         public const string QueryBetHistoryForAllStatus = "/api/ExchangeInternal/QueryBetHistoryForAllStatus";
+        public const string QueryCurrentBets = "/api/ExchangeInternal/QueryCurrentBets";
+        public const string QueryCurrentBetsByLastUpdateDate = "/api/ExchangeInternal/QueryCurrentBetsByLastUpdateDate";
     }
 }

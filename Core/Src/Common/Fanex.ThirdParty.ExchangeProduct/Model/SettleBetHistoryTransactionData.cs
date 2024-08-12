@@ -9,6 +9,8 @@ namespace Fanex.ThirdParty.ExchangeProduct.Model
 
         public decimal txStake { get; set; }
 
+        public decimal txLiability { get; set; }
+
         public decimal txOddsMatched { get; set; }
 
         public decimal actualOdds { get; set; }
