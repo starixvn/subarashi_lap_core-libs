@@ -51,7 +51,8 @@ export default class MultipleSelect extends Component {
         isAllTextShown: PropTypes.bool,
         texts: PropTypes.object,
         isValid: PropTypes.bool,
-        disabled: PropTypes.bool
+        disabled: PropTypes.bool,
+        allOptionValue: PropTypes.string
     }
 
     static defaultProps = {
@@ -62,7 +63,8 @@ export default class MultipleSelect extends Component {
         hasAllOption: true,
         hasSearchBox: false,
         isValid: true,
-        disabled: false
+        disabled: false,
+        allOptionValue: ''
     }
 
     componentDidMount() {
@@ -167,15 +169,20 @@ export default class MultipleSelect extends Component {
     _getSelectedItemKey() {
         const selectedItemKey = [];
         const dataSource = this.state.dataSource;
+        let isAllCheck = true;
+
         for (let i = 0; i < dataSource.length; i++) {
             const item = dataSource[i];
 
             if (item.checked) {
                 selectedItemKey.push(item.key)
             }
+            else {
+                isAllCheck = false;
+            }
         }
 
-        return selectedItemKey.join(",");
+        return isAllCheck && !!this.props.allOptionValue ? this.props.allOptionValue : selectedItemKey.join(",");
     }
 
     _close = () => {
