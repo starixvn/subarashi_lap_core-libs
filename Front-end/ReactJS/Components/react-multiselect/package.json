@@ -1,6 +1,6 @@
 {
   "name": "@legion-lib/react-multiselect",
-  "version": "2.1.0",
+  "version": "2.1.6",
   "description": "React MultiSelect Component",
   "main": "dist/index.js",
   "scripts": {

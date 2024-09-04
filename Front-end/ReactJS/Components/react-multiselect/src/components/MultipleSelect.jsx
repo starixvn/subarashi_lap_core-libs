@@ -51,7 +51,9 @@ export default class MultipleSelect extends Component {
         isAllTextShown: PropTypes.bool,
         texts: PropTypes.object,
         isValid: PropTypes.bool,
-        disabled: PropTypes.bool
+        disabled: PropTypes.bool,
+        allOptionValue: PropTypes.string,
+        hasCheckAllBasedOnSearch: PropTypes.bool
     }
 
     static defaultProps = {
@@ -62,7 +64,9 @@ export default class MultipleSelect extends Component {
         hasAllOption: true,
         hasSearchBox: false,
         isValid: true,
-        disabled: false
+        disabled: false,
+        allOptionValue: '',
+        hasCheckAllBasedOnSearch: false
     }
 
     componentDidMount() {
@@ -119,7 +123,7 @@ export default class MultipleSelect extends Component {
 
     checkAllHandler = (checked) => {
         const newDataSource = this.state.dataSource.map(item => {
-            if (item.checked !== checked) {
+            if (item.checked !== checked && (!this.props.hasCheckAllBasedOnSearch || item.visible)) {
                 return { ...item, checked };
             }
 
@@ -167,15 +171,20 @@ export default class MultipleSelect extends Component {
     _getSelectedItemKey() {
         const selectedItemKey = [];
         const dataSource = this.state.dataSource;
+        let isAllCheck = true;
+
         for (let i = 0; i < dataSource.length; i++) {
             const item = dataSource[i];
 
             if (item.checked) {
                 selectedItemKey.push(item.key)
             }
+            else {
+                isAllCheck = false;
+            }
         }
 
-        return selectedItemKey.join(",");
+        return isAllCheck && !!this.props.allOptionValue ? this.props.allOptionValue : selectedItemKey.join(",");
     }
 
     _close = () => {
@@ -191,8 +200,12 @@ export default class MultipleSelect extends Component {
 
     _renderOptionAll() {
         if (this.props.hasAllOption) {
-            const checkedItemCount = this.state.dataSource.filter(x => x.checked).length;
-            const checkedAll = checkedItemCount === this.state.dataSource.length;
+            const newDataSource = !this.props.hasCheckAllBasedOnSearch 
+                ? this.state.dataSource
+                : this.state.dataSource.filter(x => x.visible);
+
+            const checkedItemCount = newDataSource.filter(x => x.checked).length;
+            const checkedAll = checkedItemCount === newDataSource.length;
             return (<OptionAll id={this.id} checked={checkedAll} language={this.props.language} onChange={this.checkAllHandler} />);
         }
 
