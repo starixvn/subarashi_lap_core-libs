@@ -47,9 +47,9 @@ namespace Fanex.ThirdParty.ExchangeProduct.Model
 
         public int? fancyBetRuns { get; set; }
 
-        public int fancyBetExtendedRuns { get; set; }
+        public int? fancyBetExtendedRuns { get; set; }
 
-        public int fancyBetMarketType { get; set; }
+        public int? fancyBetMarketType { get; set; }
 
         public string extension1 { get; set; }
 

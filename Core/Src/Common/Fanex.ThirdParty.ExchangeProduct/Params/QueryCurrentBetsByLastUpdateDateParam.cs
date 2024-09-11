@@ -2,7 +2,7 @@
 
 namespace Fanex.ThirdParty.ExchangeProduct.Params
 {
-    public class QueryCurrentBetsByLastTimeParam : BaseParam
+    public class QueryCurrentBetsByLastUpdateDateParam : BaseParam
     {
         public long LastUpdateDate { get; set; }
 

@@ -18,6 +18,6 @@ namespace Fanex.ThirdParty.ExchangeProduct
 
         public string UrlQueryBetHistoryForAllStatus { get; set; } = UrlEndPoint.QueryBetHistoryForAllStatus;
 
-        public string UrlQueryCurrentBetsByLastTime { get; set; } = UrlEndPoint.QueryCurrentBetsByLastUpdateDate;
+        public string QueryCurrentBetsByLastUpdateDate { get; set; } = UrlEndPoint.QueryCurrentBetsByLastUpdateDate;
     }
 }

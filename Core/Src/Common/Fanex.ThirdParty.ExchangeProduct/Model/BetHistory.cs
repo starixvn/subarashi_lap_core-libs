@@ -13,8 +13,8 @@ namespace Fanex.ThirdParty.ExchangeProduct.Model
 
         public decimal totalPage { get; set; }
 
-        public BetHistory matched { get; set; }
+        public decimal totalCount { get; set; }
 
-        public BetHistory unmatched { get; set; }
+        public List<BetHistoryResultList> resultList { get; set; }
     }
 }

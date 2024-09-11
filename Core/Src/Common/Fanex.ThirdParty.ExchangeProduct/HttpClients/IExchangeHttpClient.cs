@@ -22,6 +22,6 @@ namespace Fanex.ThirdParty.ExchangeProduct.HttpClients
 
         Task<ResponseResult<BetHistoryForAllStatus>> QueryBetHistoryForAllStatusAsync(QueryBetHistoryForAllStatusParam param);
 
-        Task<ResponseResult<CurrentBet>> QueryCurrentBetsByLastTime(QueryCurrentBetsByLastTimeParam param);
+        Task<ResponseResult<CurrentBet>> QueryCurrentBetsByLastUpdateDate(QueryCurrentBetsByLastUpdateDateParam param);
     }
 }

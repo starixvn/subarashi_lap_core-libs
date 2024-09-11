@@ -1,6 +1,5 @@
 ﻿using Fanex.ThirdParty.ExchangeProduct.Enums;
 using System;
-using System.Collections.Generic;
 
 namespace Fanex.ThirdParty.ExchangeProduct.Model
 {
@@ -13,8 +12,10 @@ namespace Fanex.ThirdParty.ExchangeProduct.Model
 
         public decimal totalPage { get; set; }
 
-        public decimal totalCount { get; set; }
+        public long lastUpdateDate { get; set; }
 
-        public List<BetHistoryResultList> resultList { get; set; }
+        public BetHistory matched { get; set; }
+
+        public BetHistory unmatched { get; set; }
     }
 }

@@ -76,8 +76,8 @@ namespace Fanex.ThirdParty.ExchangeProduct.HttpClients
         public Task<ResponseResult<CommissionInfo>> UpdateCommissionAsync(UpdateCommissionParam param)
             => PostAsync<CommissionInfo, UpdateCommissionParam>(BaseAddress + _option.UrlUpdateCommission, param);
 
-        public Task<ResponseResult<CurrentBet>> QueryCurrentBetsByLastTime(QueryCurrentBetsByLastTimeParam param)
-            => PostAsync<CurrentBet, QueryCurrentBetsByLastTimeParam>(BaseAddress + _option.UrlQueryCurrentBetsByLastTime, param);
+        public Task<ResponseResult<CurrentBet>> QueryCurrentBetsByLastUpdateDate(QueryCurrentBetsByLastUpdateDateParam param)
+            => PostAsync<CurrentBet, QueryCurrentBetsByLastUpdateDateParam>(BaseAddress + _option.QueryCurrentBetsByLastUpdateDate, param);
 
         public async Task<ResponseResult<TResult>> PostAsync<TResult, TParam>(string url, TParam param)
             where TResult : class
