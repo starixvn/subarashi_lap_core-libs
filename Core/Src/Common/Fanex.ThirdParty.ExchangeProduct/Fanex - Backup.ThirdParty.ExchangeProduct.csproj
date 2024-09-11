@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageId>Fanex.LAP.ThirdParty.ExchangeProduct</PackageId>
+    <Version>1.0.8.3-beta3</Version>
+    <Authors>Steve.Nguyen</Authors>
+    <Title>Fanex.LAP.ThirdParty.ExchangeProduct</Title>
+    <Company>Legion Team</Company>
+    <Product>Legion 3rd Party Api</Product>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="System.Net.Http" Version="4.3.4" />
+  </ItemGroup>
+
+</Project>
