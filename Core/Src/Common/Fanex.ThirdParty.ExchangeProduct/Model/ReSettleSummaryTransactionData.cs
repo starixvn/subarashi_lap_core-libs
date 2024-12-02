@@ -16,6 +16,6 @@ namespace Fanex.ThirdParty.ExchangeProduct.Model
 
         public DateTime? placed { get; set; }
 
-        public decimal txLiability { get; set; }
+        public decimal profitLoss { get; set; }
     }
 }

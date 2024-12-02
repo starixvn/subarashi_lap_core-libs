@@ -4,7 +4,7 @@
     <TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageId>Fanex.LAP.ThirdParty.ExchangeProduct</PackageId>
-    <Version>1.0.8.3</Version>
+    <Version>1.0.8.4</Version>
     <Authors>Steve.Nguyen</Authors>
     <Title>Fanex.LAP.ThirdParty.ExchangeProduct</Title>
     <Company>Legion Team</Company>
