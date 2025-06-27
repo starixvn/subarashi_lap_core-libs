@@ -27,7 +27,7 @@ namespace Fanex.ThirdParty.ExchangeProduct.Model
 
         public string selectionName { get; set; }
 
-        public int selectionId { get; set; }
+        public long selectionId { get; set; }
 
         public string matchType { get; set; }
 
